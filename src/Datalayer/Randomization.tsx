@@ -628,7 +628,7 @@ export class Randomization {
    * Returns a String
    * with all the elements of the selection. (In HTML format-ready to put in a Jlabel)
    */
-  getInfo(): String {
+  getInfo(): string {
     let str = '<html>' //hier ook terug wegdoenzonder Jpanel
     str +=
       "You've allready selected " +

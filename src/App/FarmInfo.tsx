@@ -38,21 +38,23 @@ const FarmInfo: React.FC<Props> = ({ todo }) => {
       <div>AAmilk</div>
       <div>number of cows</div>
       <table>
-        <tr>
-          <th></th>
-          <th>Vaccinated cows</th>
-          <th>Non-Vaccinated cows</th>
-        </tr>
-        <tr>
-          <td>Number of High</td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>Number of Low</td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th></th>
+            <th>Vaccinated cows</th>
+            <th>Non-Vaccinated cows</th>
+          </tr>
+          <tr>
+            <td>Number of High</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Number of Low</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+        </tbody>
       </table>
     </Centered>
   )

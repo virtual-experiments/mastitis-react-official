@@ -57,7 +57,7 @@ export class Cow {
    * (Consisting of the letters BE and the rest of the earnumber.)
    */
   //moet zo noemen voor Jtree
-  toString(): String {
+  toString(): string {
     return 'BE' + this.ID.toString()
   } //end toString
 
@@ -65,7 +65,7 @@ export class Cow {
    * This method returns a String representation of ID off the Cow
    */
   //nodig voor in datasetDialog daar kunnen we de tostring niet gebruiken door die BE
-  getCowID(): String {
+  getCowID(): string {
     return this.ID.toString()
   } //end getCowID
 
@@ -73,7 +73,7 @@ export class Cow {
    * This method returns a String representation of the parity off the Cow
    */
   //nodig voor in datasetDialog
-  getParity(): String {
+  getParity(): string {
     return this.parity.toString()
   } //end getParity
 
@@ -82,7 +82,7 @@ export class Cow {
    * the Cow is allready in lactation
    */
   //nodig voor in datasetDialog
-  getDays(): String {
+  getDays(): string {
     return this.nrDays.toString()
   } //end getDays
 
@@ -90,7 +90,7 @@ export class Cow {
    * This method returns the details in html format
    * ready to use in a JLabel
    */
-  getHTMLDetails(): String {
+  getHTMLDetails(): string {
     var first =
       '<html>Earnumber:  ' +
       toString() +

@@ -15,7 +15,7 @@ export class Farm {
   private BNO: number
   private AAmilk: boolean
 
-  private cows: Cow[] = []
+  cows: Cow[] = []
 
   /**************************  constructors **************************/
   /**
@@ -41,7 +41,7 @@ export class Farm {
    * This method returns a String representation of the farm.
    */
   //moet zo noemen voor Jtree
-  toString(): String {
+  toString(): string {
     return 'Farm nr ' + this.getFarmID()
   } // end toString
 
@@ -49,7 +49,7 @@ export class Farm {
    * This method returns a String representation of ID off the Farm
    */
   //nodig voor in datasetDialog daar kunnen we de tostring niet gebruiken door die farm nr...
-  getFarmID(): String {
+  getFarmID(): string {
     return this.ID.toString()
   } //end getFarmID
 
@@ -57,7 +57,7 @@ export class Farm {
    * This method returns a String representation of the BNO off the farm
    */
   //nodig voor in datasetDialog
-  getBNO(): String {
+  getBNO(): string {
     return this.BNO.toString()
   } //end getBNO
 
@@ -80,7 +80,7 @@ export class Farm {
    * This method adds a cow to the farm.
    */
   addCow(koe: Cow): void {
-    this.cows.push(koe)
+    this.cows = [...this.cows, koe] //this.cows.push(koe)
   } //end addCow
 
   /**
@@ -130,7 +130,7 @@ export class Farm {
    * How many cows are participating and a crosstable of their properties.
    * The layout is ready to use in a JLabel.
    */
-  getHTMLDetails(): String {
+  getHTMLDetails(): string {
     return (
       "<html><body align='center'>" +
       toString() +

@@ -130,7 +130,7 @@ export class Experiment {
    * How many cows are participating and a crosstable of their properties.
    * The layout is ready to use in a JLabel. (it uses HTML)
    */
-  getHTMLDetails(): String {
+  getHTMLDetails(): string {
     return (
       '<html>The number of cows in the experiment: \t' +
       this.numberOfParticipatingCows() +
