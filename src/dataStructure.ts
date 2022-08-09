@@ -298,4 +298,3 @@ export const addCow = selectorFamily
     })
   }
 })
-

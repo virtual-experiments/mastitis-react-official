@@ -10,15 +10,21 @@ import ErrorBoundary from './ErrorBoundary'
 import { NotFound } from './NotFound'
 import * as serviceWorker from './serviceWorkerRegistration'
 
+export interface AppProps {
+  path: string
+  farmId?: string
+  cowId?: string
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <ErrorBoundary>
     <RecoilRoot>
       <Router>
         <App path="/" />
-        <App path="/page-1" />
-        <App path="/page-2" />
-        <App path="/page-3" />
+        <App path="/region" />
+        <App path="/:farmId" />
+        <App path="/:farmId/:cowId" />
         <NotFound default />
       </Router>
     </RecoilRoot>

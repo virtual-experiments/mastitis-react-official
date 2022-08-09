@@ -197,7 +197,6 @@ export const DataLoader: React.FC<any> = ({}) => {
       let cowprod = cowData[i][2]
       let earnr = farmID * 10000 + cowID
       let koe = new Cow(earnr, cowpar, cowdim, cowprod, boerderij)
-      console.log(newFState[0])
       newFState[0].addCow(koe)
       //   newFState.forEach((f: Farm) => {
       //     if (f.ID == farmID) {

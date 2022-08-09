@@ -7,34 +7,37 @@ import Navigation, { NavItemProps } from './Navigationbar/Navigationbar'
 import { useRecoilValue } from 'recoil'
 import { Cow } from '../Datalayer/Cow'
 import { Farm } from '../Datalayer/Farm'
+import { AppProps } from '..'
 
 interface Props {
-  path: Routes
+  path: string
 }
 
 interface StyleProp {
   active: boolean
 }
 
-const Sidebar: React.FC<Props> = ({ path }) => {
+const Sidebar: React.FC<AppProps> = (props) => {
   function getNavigationList(): NavItemProps[] {
     let FState = useRecoilValue(farmState)
     let tree: NavItemProps[] = [{ title: 'Region view', itemId: '/' }]
 
     let data = FState.map((f: Farm) => {
-      let id = 'farm_' + f.getFarmID()
+      let id = 'farm' + f.getFarmID()
       return {
         title: id,
         itemId: '/' + id,
         subNav: cowsToNavbar(id, f.getCows()),
       }
     })
-    console.log(tree.concat(data))
     return tree.concat(data)
   }
   return (
     <>
-      <Navigation activeItemId={path} items={getNavigationList()}></Navigation>
+      <Navigation
+        activeItemId={props.path}
+        items={getNavigationList()}
+      ></Navigation>
     </>
   )
 }

@@ -10,12 +10,13 @@ import { Layout } from './style'
 import Sidebar from './Sidebar'
 import FarmInfo from './FarmInfo'
 import ButtonPage from './ButtonPage'
+import { AppProps } from '..'
 
 interface Props {
-  path: Routes
+  path: string
 }
 
-const App: React.FC<Props & RouteComponentProps> = ({ path }) => {
+const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   // const appState = useRecoilValue<AppState>(recoilState)
 
   // // if appState has changes, save it LocalStorage.
@@ -25,17 +26,25 @@ const App: React.FC<Props & RouteComponentProps> = ({ path }) => {
   //     JSON.stringify(appState) // convert JavaScript Object to string
   //   )
   // }, [appState])
+  console.log(props)
 
   return (
     <Layout>
       <div className="column-layout">
         <div className="leftContent">
-          <Sidebar path={path} />
+          <Sidebar path={props.uri!} />
         </div>
         <div className="rightContent">
           <section className="todoapp">
-            <FarmInfo />
-            <ButtonPage />
+            {props.path === '/' ? (
+              <div>Region View</div>
+            ) : (
+              <>
+                <FarmInfo farmId={props.farmId} />
+                <ButtonPage farmId={props.farmId} cowId={props.cowId} />
+              </>
+            )}
+
             {/* <NewTodoInput />
           {appState.todoList.length ? (
             <>

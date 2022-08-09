@@ -4,8 +4,9 @@ import { useRecoilState } from 'recoil'
 import type { AppState } from '../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
+import { AppProps } from '..'
 
-const logo = require('../images/farm1684.jpg') // with require
+//const logo = require('images/farm1342.jpg')
 
 interface Props {
   todo?: string
@@ -58,12 +59,18 @@ const SecondBox = styled.div`
   flex: 3;
 `
 
-const ButtonPage: React.FC<Props> = ({ todo }) => {
+export interface ButtonPageProps {
+  farmId?: string
+  cowId?: string
+}
+
+const ButtonPage: React.FC<ButtonPageProps> = (props) => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
+  const path = 'images/'
   const editInput = createRef<HTMLInputElement>()
   const init: State = { onEdit: false }
   const [state, setState] = useState(init)
-
+  console.log(path + props.farmId + '.jpg')
   return (
     <FlexBox>
       <FirstBox>
@@ -131,10 +138,20 @@ const ButtonPage: React.FC<Props> = ({ todo }) => {
           </Button>
         </div>
       </FirstBox>
-      <MiddleBox></MiddleBox>
-      <SecondBox>
-        <img src={logo} />
-      </SecondBox>
+      {props.cowId ? (
+        <></>
+      ) : (
+        <>
+          <MiddleBox></MiddleBox>
+          <SecondBox>
+            {props.farmId ? (
+              <img src={path + props.farmId + '.jpg'} />
+            ) : (
+              <img src={path + 'farm1342.jpg'} />
+            )}
+          </SecondBox>
+        </>
+      )}
     </FlexBox>
   )
 }

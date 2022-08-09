@@ -1,14 +1,15 @@
 import React, { useState, createRef, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
-import type { AppState } from '../dataStructure'
+import { AppState, farmState } from '../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
 
 import { Layout } from './style'
+import { Farm } from '../Datalayer/Farm'
 
-interface Props {
-  todo?: string
+interface FarmProps {
+  farmId?: string
 }
 
 interface State {
@@ -25,15 +26,15 @@ const Centered = styled.div`
   }
 `
 
-const FarmInfo: React.FC<Props> = ({ todo }) => {
+const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
-  const editInput = createRef<HTMLInputElement>()
-  const init: State = { onEdit: false }
-  const [state, setState] = useState(init)
-
+  let farms = useRecoilValue(farmState)
+  let selectedFarm = farms.find((f: Farm) =>
+    farm.farmId?.includes(f.getFarmID())
+  )
   return (
     <Centered>
-      <div>Farmnumber</div>
+      <div>Farmnumber: {selectedFarm?.getFarmID()}</div>
       <div>BNO</div>
       <div>AAmilk</div>
       <div>number of cows</div>
