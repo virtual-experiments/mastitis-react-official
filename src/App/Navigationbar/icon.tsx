@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
 type IconProps = {
-  size?: string | number;
-  stroke?: string;
-};
+  size?: string | number
+  stroke?: string
+}
 
 const ChevronDown: React.FC<IconProps> = ({
   size = 20,
@@ -27,10 +27,10 @@ const ChevronDown: React.FC<IconProps> = ({
         <path d="M6 9l6 6 6-6" />
       </svg>
     </>
-  );
-};
+  )
+}
 
-export const ChevronDownIcon = React.memo(ChevronDown);
+export const ChevronDownIcon = React.memo(ChevronDown)
 
 const ChevronUp: React.FC<IconProps> = ({
   size = 20,
@@ -54,7 +54,7 @@ const ChevronUp: React.FC<IconProps> = ({
         <path d="M18 15l-6-6-6 6" />
       </svg>
     </>
-  );
-};
+  )
+}
 
-export const ChevronUpIcon = React.memo(ChevronUp);
+export const ChevronUpIcon = React.memo(ChevronUp)

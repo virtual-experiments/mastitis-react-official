@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { Link } from '@reach/router'
 
-import { farmState, Routes } from '../dataStructure'
+import { farmState, randomizationsState, Routes } from '../dataStructure'
 import Navigation, { NavItemProps } from './Navigationbar/Navigationbar'
 import { useRecoilValue } from 'recoil'
 import { Cow } from '../Datalayer/Cow'
 import { Farm } from '../Datalayer/Farm'
 import { AppProps } from '..'
+
+import Icon from 'awesome-react-icons'
 
 interface Props {
   path: string
@@ -20,16 +22,23 @@ interface StyleProp {
 const Sidebar: React.FC<AppProps> = (props) => {
   function getNavigationList(): NavItemProps[] {
     let FState = useRecoilValue(farmState)
-    let tree: NavItemProps[] = [{ title: 'Region view', itemId: '/' }]
+    let tree: NavItemProps[] = [
+      {
+        title: 'Region view',
+        itemId: '/',
+        elemBefore: () => <img src=".././images/kaart.gif" height="30px" />,
+      },
+    ]
 
     let data = FState.map((f: Farm) => {
-      let id = 'farm' + f.getFarmID()
       return {
-        title: id,
-        itemId: '/' + id,
-        subNav: cowsToNavbar(id, f.getCows()),
+        title: 'Farm nr ' + f.getFarmID(),
+        itemId: '/' + f.getFarmID(),
+        subNav: cowsToNavbar(f.getFarmID(), f.getCows()),
+        elemBefore: () => <img src=".././images/koefarm.gif" height="30px" />,
       }
     })
+
     return tree.concat(data)
   }
   return (
@@ -43,64 +52,38 @@ const Sidebar: React.FC<AppProps> = (props) => {
 }
 
 function cowsToNavbar(prevId: string, cows: Cow[]): NavItemProps[] {
+  let randomization = useRecoilValue(randomizationsState)[0]
+
   return cows.map((c: Cow) => {
+    let icon = 'icon'
+    if (c.isParticipating()) {
+      //de koe DOET MEE aan experiment
+      if (randomization.hasThis(c))
+        //koe zit in randomizer:
+        icon += 'R'
+      //koe zit niet in randomizer
+      else icon += 'S'
+      if (c.getsVaccin())
+        //koe krijgt WEL vaccin
+        icon += 'V'
+      if (c.getsNOVaccin())
+        // de koe krijgt GEEN vaccin
+        icon += 'N'
+      if (c.hasHighChallenge())
+        //HOOG
+        icon += 'H'
+      if (c.hasLowChallenge())
+        //LAAG
+        icon += 'L'
+    }
+
+    icon += '.gif'
     return {
-      title: c.getCowID(),
+      title: 'BE' + c.getCowID(),
       itemId: '/' + prevId + '/' + c.getCowID(),
+      elemBefore: () => <img src={'.././images/' + icon} height="25px" />,
     }
   })
 }
-
-const NewSidebarItems: NavItemProps[] = [
-  {
-    title: 'Region view',
-    itemId: '/',
-  },
-  {
-    title: 'Dashboard',
-    itemId: '/dashboard',
-  },
-  {
-    title: 'Page 1',
-    itemId: '/page-1',
-    subNav: [
-      {
-        title: 'Cow 1',
-        itemId: 'Cow-1',
-      },
-    ],
-  },
-  {
-    title: 'Page 2',
-    itemId: '/page-2',
-  },
-  {
-    title: 'Page 3',
-    itemId: 'page-3',
-  },
-]
-
-const SidebarItems = [
-  {
-    name: 'Region view',
-    route: '/',
-  },
-  {
-    name: 'Dashboard',
-    route: '/dashboard',
-  },
-  {
-    name: 'Page 1',
-    route: '/page-1',
-  },
-  {
-    name: 'Page 2',
-    route: '/page-2',
-  },
-  {
-    name: 'Page 3',
-    route: 'page-3',
-  },
-]
 
 export default Sidebar

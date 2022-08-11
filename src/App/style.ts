@@ -28,7 +28,7 @@ export const Layout = styled.div`
   }
 
   .leftContent {
-    width: 200px;
+    width: 300px;
     position: fixed;
     overflow: scroll;
     top: 0;
@@ -46,7 +46,7 @@ export const Layout = styled.div`
   }
 
   .column-layout {
-    max-width: 1600px;
+    //max-width: 1600px;
     background-color: #FFF;
     margin: 0 auto 0 auto;
     line-height: 1.65;
