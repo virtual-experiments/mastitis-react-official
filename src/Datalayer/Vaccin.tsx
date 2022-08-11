@@ -8,7 +8,7 @@ import { Randomization } from './Randomization'
 export class Vaccin {
   /******************************  attributes  ***********************/
   private getsvaccin: boolean //true when vaccin, false when non-vaccin
-  private ran: Randomization //when the vaccin is randomized,
+  private ran: Randomization | null //when the vaccin is randomized,
   //this links back to the randomization, else this is null
 
   /****************************  constructors ************************/
@@ -17,7 +17,7 @@ export class Vaccin {
    * @param random links back to the randomization
    * (when the vaccin is randomized) else null
    */
-  constructor(vaccin: boolean, random: Randomization) {
+  constructor(vaccin: boolean, random: Randomization | null) {
     this.getsvaccin = vaccin
     this.ran = random
   }
@@ -42,7 +42,7 @@ export class Vaccin {
    * this randomization is returned,
    * else result is null.
    */
-  getRandomization(): Randomization {
+  getRandomization(): Randomization | null {
     return this.ran
   } // end getRandomization
 }

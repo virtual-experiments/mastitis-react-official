@@ -37,7 +37,8 @@ export class Experiment {
   //één richting
   //protected want nodig in klasse Cow
   addCow(cow: Cow): void {
-    this.cows.push(cow)
+    this.cows = [...this.cows, cow]
+    // this.cows.push(cow)
   } //end addCow
 
   /**
@@ -151,7 +152,7 @@ export class Experiment {
    * Gives the number of cows, who're participating in the experiment,
    * get the Vaccin and get a High Challenge.
    */
-  private numberOfVacinatedHighChallengeCows(): number {
+  numberOfVacinatedHighChallengeCows(): number {
     var tel = 0
     for (var i = 0; i < this.cows.length; i++) {
       var koe = this.cows[i]
@@ -164,7 +165,7 @@ export class Experiment {
    * Gives the number of cows, who're participating in the experiment,
    * get the Vaccin and get a Low Challenge.
    */
-  private numberOfVacinatedLowChallengeCows(): number {
+  numberOfVacinatedLowChallengeCows(): number {
     var tel = 0
     for (var i = 0; i < this.cows.length; i++) {
       var koe = this.cows[i]
@@ -177,7 +178,7 @@ export class Experiment {
    * Gives the number of cows, who're participating in the experiment,
    * get NO Vaccin and get a Low Challenge.
    */
-  private numberOfNOTVacinatedLowChallengeCows(): number {
+  numberOfNOTVacinatedLowChallengeCows(): number {
     var tel = 0
     for (var i = 0; i < this.cows.length; i++) {
       var koe = this.cows[i]
@@ -190,12 +191,24 @@ export class Experiment {
    * Gives the number of cows, who're participating in the experiment,
    * get NO Vaccin and get a High Challenge.
    */
-  private numberOfNOTVacinatedHighChallengeCows(): number {
+  numberOfNOTVacinatedHighChallengeCows(): number {
     var tel = 0
     for (var i = 0; i < this.cows.length; i++) {
       var koe = this.cows[i]
       if (koe.getsNOVaccin() && koe.hasHighChallenge()) tel++
     }
     return tel
+  }
+
+  copy(): Experiment {
+    let newExperiment = new Experiment()
+
+    newExperiment.cows = [...this.cows]
+    newExperiment.mean = this.mean
+    newExperiment.parity = this.parity
+    newExperiment.heifervaccin = this.heifervaccin
+    newExperiment.multivaccin = this.multivaccin
+
+    return newExperiment
   }
 }

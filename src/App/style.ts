@@ -5,44 +5,6 @@
 import styled, { css } from 'styled-components'
 
 export const Layout = styled.div`
-  // .todoapp {
-  //   background: #fff;
-  //   margin: 13px 0 40px 0;
-  //   position: relative;
-  //   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  // }
-
-  // .todoapp input::-webkit-input-placeholder {
-  //   font-style: italic;
-  //   font-weight: 300;
-  //   color: #e6e6e6;
-  // }
-
-  // .todoapp input::-moz-placeholder {
-  //   font-style: italic;
-  //   font-weight: 300;
-  //   color: #e6e6e6;
-  // }
-
-  // .todoapp input::input-placeholder {
-  //   font-style: italic;
-  //   font-weight: 300;
-  //   color: #e6e6e6;
-  // }
-
-  // .todoapp h1 {
-  //   position: absolute;
-  //   top: -155px;
-  //   width: 100%;
-  //   font-size: 100px;
-  //   font-weight: 100;
-  //   text-align: center;
-  //   color: rgba(175, 47, 47, 0.15);
-  //   -webkit-text-rendering: optimizeLegibility;
-  //   -moz-text-rendering: optimizeLegibility;
-  //   text-rendering: optimizeLegibility;
-  // }
-
   .info {
     margin: 65px auto 0;
     color: #bfbfbf;
@@ -66,43 +28,30 @@ export const Layout = styled.div`
   }
 
   .leftContent {
-    //width: 500px;
-    flex:1;
-    order:1;
-    position: relative; 
+    width: 200px;
+    position: fixed;
+    overflow: scroll;
+    top: 0;
+  bottom: 1px; 
     border-right: 6px solid black;
+    background-color: #FFF;
   }
 
   .rightContent {
-    flex:5;
-    order:2;
+    margin-left: 200px;
+    flex-grow: 1;
+    // flex:1 1 1;
+    background-color: #FFF;
+    
   }
 
   .column-layout {
-    //max-width: 1600px;
+    max-width: 1600px;
     background-color: #FFF;
     margin: 0 auto 0 auto;
     line-height: 1.65;
     padding: 0 0;
     display: flex;
+    flex-grow: 1;
   }
 `
-
-export const base = {
-  textInput: css`
-    position: relative;
-    margin: 0;
-    width: 100%;
-    font-size: 24px;
-    font-family: inherit;
-    font-weight: inherit;
-    line-height: 1.4em;
-    color: inherit;
-    padding: 6px;
-    border: 1px solid #999;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  `,
-}

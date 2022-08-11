@@ -1,4 +1,6 @@
 import { min } from 'cypress/types/lodash'
+import { useRecoilState } from 'recoil'
+import { experimentState } from '../dataStructure'
 import { Challenge } from './Challenge'
 import { Experiment } from './Experiment'
 import { Farm } from './Farm'
@@ -21,7 +23,7 @@ export class Cow {
   private static varcow: number = 0.008 //de variantie waarmee de randomfactor van de koe bepaald wordt
   //static final #r:Random = new Random();// moet hier staan anders krijgen we dikwijls hetzelfde random getal
 
-  private participates: boolean = false //if the cow participates in the experiment
+  participates: boolean //if the cow participates in the experiment
   /* staan public om in buttonpanel aan te kunnen, om te zien of er een randomisatie achter zit */
   vaccin?: Vaccin //als vaccin toegekend is, is deze link niet meer null
   challenge?: Challenge //als er een challenge is toegekend, is deze link niet null
@@ -35,20 +37,24 @@ export class Cow {
    * @param Farm the farm where the cow resides,
    *  (we need it for it's random factor)
    */
-
   constructor(
     id: number,
     par: number,
     dim: number,
     prod: number,
-    boerderij: Farm
+    boerderij?: Farm,
+    random?: number
   ) {
     this.ID = id
     this.parity = par
     this.nrDays = dim
     this.initproduction = prod
     const rando = nextGaussian(-100, 100, 1)
-    this.random = rando * Math.sqrt(Cow.varcow) + boerderij.ran
+    if (random) this.random = random
+    else if (boerderij)
+      this.random = rando * Math.sqrt(Cow.varcow) + boerderij!.ran
+    else throw 'Error, constructor not valid'
+    this.participates = false
   }
 
   /*******************************   methods  **********************/
@@ -179,9 +185,9 @@ export class Cow {
    * This method links the experiment to this cow and vice versa.
    */
   //2 richtingen
-  addToExperiment(): void {
+  addToExperiment(oldExperiment: Experiment): void {
     this.participates = true
-    Experiment.getTheExperiment().addCow(this)
+    oldExperiment.addCow(this)
   } // end addToExperiment
 
   /**
@@ -189,8 +195,8 @@ export class Cow {
    * and the cow will no longer be in the experiment.
    */
   //2 richtingen
-  removeOutOfExperiment(): void {
-    Experiment.getTheExperiment().removeCow(this)
+  removeOutOfExperiment(exp: Experiment): void {
+    exp.removeCow(this)
     this.participates = false
   } // end removeOutOfExperiment
 
@@ -201,9 +207,9 @@ export class Cow {
    * @param high is true when the cow gets a hign vaccin, false if it gets a low
    * @param ran is the link to the randomization, when this challenge is manually set, this is null
    */
-  setChallenge(high: boolean, ran: Randomization): void {
+  setChallenge(high: boolean, ran: Randomization | null): void {
     if (this.challenge != null && this.challenge.randomized()) {
-      this.challenge.getRandomization().undo()
+      this.challenge.getRandomization()!.undo()
     }
     this.challenge = new Challenge(high, ran)
   } // end setChallenge
@@ -215,9 +221,9 @@ export class Cow {
    * @param vac the boolean that indicates if the cow gets the vaccin
    * @param ran is the link to the randomization, when this vaccin is manually set, pass null
    */
-  setVaccin(vac: boolean, ran: Randomization): void {
+  setVaccin(vac: boolean, ran: Randomization | null): void {
     if (this.vaccin != null && this.vaccin.randomized()) {
-      this.vaccin.getRandomization().undo()
+      this.vaccin.getRandomization()!.undo()
     }
     this.vaccin = new Vaccin(vac, ran)
   } // end setVaccin
@@ -227,6 +233,23 @@ export class Cow {
    */
   isHeifer(): boolean {
     return this.parity == 1
+  }
+
+  copy(): Cow {
+    let newCow = new Cow(
+      this.ID,
+      this.parity,
+      this.nrDays,
+      this.initproduction,
+      undefined,
+      this.random
+    )
+
+    newCow.participates = this.participates
+    newCow.vaccin = this.vaccin
+    newCow.challenge = this.challenge
+
+    return newCow
   }
 }
 

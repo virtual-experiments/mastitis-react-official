@@ -681,4 +681,12 @@ export class Randomization {
     if (this.farms != null) return 'FARMS'
     return '  '
   } //end mode
+
+  copy(): Randomization {
+    let newR = new Randomization()
+
+    if (this.cows) newR.cows = [...this.cows]
+    if (this.farms) newR.farms = [...this.farms]
+    return newR
+  }
 } //end class Randomization

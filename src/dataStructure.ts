@@ -2,6 +2,7 @@ import { RecoilState, selectorFamily, useRecoilState, useRecoilValue } from 'rec
 import { atom, selector } from 'recoil'
 import internal from 'stream';
 import { Cow } from './Datalayer/Cow';
+import { Experiment } from './Datalayer/Experiment';
 import { Farm } from './Datalayer/Farm';
 import { Randomization } from './Datalayer/Randomization';
 
@@ -229,7 +230,6 @@ const loadData = (): Farm[] => {
     let cowprod = cowData[i][2]
     let earnr = farmID * 10000 + cowID
     let koe = new Cow(earnr, cowpar, cowdim, cowprod, boerderij)
-    // console.log(newFState[0])
 
     //newFState[0].addCow(koe)
       newFState.forEach((f: Farm) => {
@@ -245,6 +245,11 @@ const loadData = (): Farm[] => {
   return newFState
 } //end loadData
 
+export const experimentState: RecoilState<Experiment> = atom({
+  default: new Experiment,
+  key: 'experimentState',
+})
+
 export const farmState: RecoilState<Farm[]> = atom({
   default: loadData(),
   key: 'farmState',
@@ -259,42 +264,42 @@ export const selectionState: RecoilState<Randomization> = selector({
   set: ({set}, dum) => set(randomizationsState, prevState => [new Randomization, ...prevState])
 })
 
-export const farmPicker = selectorFamily
-({
-  key: 'farmPicker',
-  get: (farmId:number) => ({get}) => {
-    return get(farmState).find((f:Farm) => f.ID === farmId)
-  },
-  set: (farmId:number) => ({set}, newFarm) => {
-    set(farmState, prevState => {
-      let i = prevState.findIndex((f:Farm) => f.ID === farmId);
-      if (i == -1) {
-        prevState = [...prevState, newFarm as Farm]
-      } else {
-        prevState[i] = newFarm as Farm
-      }
+// export const farmPicker = selectorFamily
+// ({
+//   key: 'farmPicker',
+//   get: (farmId:number) => ({get}) => {
+//     return get(farmState).find((f:Farm) => f.ID === farmId)
+//   },
+//   set: (farmId:number) => ({set}, newFarm) => {
+//     set(farmState, prevState => {
+//       let i = prevState.findIndex((f:Farm) => f.ID === farmId);
+//       if (i == -1) {
+//         prevState = [...prevState, newFarm as Farm]
+//       } else {
+//         prevState[i] = newFarm as Farm
+//       }
 
-      return prevState
-    })
-  }
-})
+//       return prevState
+//     })
+//   }
+// })
 
-export const addCow = selectorFamily
-({
-  key: 'addCow',
-  get: (farmId:number) => ({get}) => {
-    return get(farmState).find((f:Farm) => f.ID === farmId)
-  },
-  set: (farmId:number) => ({set}, newFarm) => {
-    set(farmState, prevState => {
-      let i = prevState.findIndex((f:Farm) => f.ID === farmId);
-      if (i == -1) {
-        prevState = [...prevState, newFarm as Farm]
-      } else {
-        prevState[i] = newFarm as Farm
-      }
+// export const addCow = selectorFamily
+// ({
+//   key: 'addCow',
+//   get: (farmId:number) => ({get}) => {
+//     return get(farmState).find((f:Farm) => f.ID === farmId)
+//   },
+//   set: (farmId:number) => ({set}, newFarm) => {
+//     set(farmState, prevState => {
+//       let i = prevState.findIndex((f:Farm) => f.ID === farmId);
+//       if (i == -1) {
+//         prevState = [...prevState, newFarm as Farm]
+//       } else {
+//         prevState[i] = newFarm as Farm
+//       }
 
-      return prevState
-    })
-  }
-})
+//       return prevState
+//     })
+//   }
+// })

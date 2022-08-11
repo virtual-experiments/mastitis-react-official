@@ -1,4 +1,5 @@
 import { Cow } from './Cow'
+import { Experiment } from './Experiment'
 import { Randomization } from './Randomization'
 
 /**
@@ -158,7 +159,7 @@ export class Farm {
    * Gives the number of cows, who're participating in the experiment,
    * get the Vaccin and get a High Challenge.
    */
-  private numberOfVacinatedHighChallengeCows(): number {
+  numberOfVacinatedHighChallengeCows(): number {
     let tel = 0
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i]
@@ -172,7 +173,7 @@ export class Farm {
    * Gives the number of cows, who're participating in the experiment,
    * get the Vaccin and get a Low Challenge.
    */
-  private numberOfVacinatedLowChallengeCows(): number {
+  numberOfVacinatedLowChallengeCows(): number {
     let tel = 0
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i]
@@ -186,7 +187,7 @@ export class Farm {
    * Gives the number of cows, who're participating in the experiment,
    * get NO Vaccin and get a Low Challenge.
    */
-  private numberOfNOTVacinatedLowChallengeCows(): number {
+  numberOfNOTVacinatedLowChallengeCows(): number {
     let tel = 0
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i]
@@ -200,7 +201,7 @@ export class Farm {
    * Gives the number of cows, who're participating in the experiment,
    * get NO Vaccin and get a High Challenge.
    */
-  private numberOfNOTVacinatedHighChallengeCows(): number {
+  numberOfNOTVacinatedHighChallengeCows(): number {
     let tel = 0
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i]
@@ -296,10 +297,11 @@ export class Farm {
    * @param chal true is high challenge, low is false
    * @param ran is the link to the randomization (when this property is manually set, null has to be passed)
    */
-  setChallenge(chal: boolean, ran: Randomization): void {
+  setChallenge(chal: boolean, ran: Randomization | null): void {
     for (let i = 0; i < this.cows.length; i++) {
-      let koe = this.cows[i]
+      let koe = this.cows[i].copy()
       koe.setChallenge(chal, ran)
+      this.cows[i] = koe
     }
   } // end setChallenge
 
@@ -308,21 +310,24 @@ export class Farm {
    * @result When some cow (not in experiment)allready had a property assigned, the value true is returned
    */
   //nieuw liesbeth, laatste wijziging for warning als je remove en add doet!
-  addAllToExperiment(): boolean {
+  addAllToExperiment(oldExperiment: Experiment): boolean {
     let result = false
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i]
-      if (!koe.isParticipating()) {
+      let newKoe = koe.copy()
+      if (!newKoe.isParticipating()) {
         //anders dan krijgen de reeds toegevoegde ook warning
         if (
-          koe.getsNOVaccin() ||
-          koe.getsVaccin() ||
-          koe.hasLowChallenge() ||
-          koe.hasHighChallenge()
+          newKoe.getsNOVaccin() ||
+          newKoe.getsVaccin() ||
+          newKoe.hasLowChallenge() ||
+          newKoe.hasHighChallenge()
         ) {
           result = true
         } //warning
-        koe.addToExperiment()
+
+        newKoe.addToExperiment(oldExperiment)
+        this.cows[i] = newKoe
       }
     }
     return result
@@ -332,10 +337,11 @@ export class Farm {
    * This method removes all the cows of this farm out of the experiment.
    *(even if they weren't in the experiment)
    */
-  removeAllOutOfExperiment(): void {
+  removeAllOutOfExperiment(exp: Experiment): void {
     for (let i = 0; i < this.cows.length; i++) {
-      let koe = this.cows[i]
-      koe.removeOutOfExperiment()
+      let koe = this.cows[i].copy()
+      koe.removeOutOfExperiment(exp)
+      this.cows[i] = koe
     }
   } // end removeALL
 
@@ -344,10 +350,11 @@ export class Farm {
    * @param ja : true if vaccin, else false
    * @param ran is the link to the randomization (when this property is manually set, null has to be passed)
    */
-  setVaccin(ja: boolean, ran: Randomization): void {
+  setVaccin(ja: boolean, ran: Randomization | null): void {
     for (let i = 0; i < this.cows.length; i++) {
-      let koe = this.cows[i]
+      let koe = this.cows[i].copy()
       koe.setVaccin(ja, ran)
+      this.cows[i] = koe
     }
   } // end setVaccin
 
@@ -363,4 +370,11 @@ export class Farm {
   //  		catch (Exception e)
   //  			{return false;}
   // 	}//end equals
+
+  copy(): Farm {
+    var newFarm = new Farm(this.ID, this.AAmilk, this.BNO, this.ran)
+    newFarm.cows = [...this.cows]
+
+    return newFarm
+  }
 }

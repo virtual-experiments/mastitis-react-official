@@ -13,6 +13,7 @@ import styled from 'styled-components'
 import { AppProps } from '..'
 import { Cow } from '../Datalayer/Cow'
 import { Farm } from '../Datalayer/Farm'
+import { Challenge } from '../Datalayer/Challenge'
 
 //const logo = require('images/farm1342.jpg')
 
@@ -69,17 +70,18 @@ const SecondBox = styled.div`
   flex: 3;
 `
 
-export interface FarmButtonPageProps {
+export interface ButtonPageProps {
   farmId?: string
+  cowId?: string
 }
 
-const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
+export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   const path = 'images/'
 
   const availabilities = {
-    Add: true,
-    Remove: true,
+    AddToggle: true,
+    isAdd: true,
     giveVaccine: true,
     giveNoVaccine: true,
     ChallengeHigh: true,
@@ -89,105 +91,143 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
 
   let [farms, setFarms] = useRecoilState(farmState)
   let [randomizations, setRandomizations] = useRecoilState(randomizationsState)
-  let randomization = randomizations[0]
   let [experiment, setExperiment] = useRecoilState(experimentState)
+  let randomization = randomizations[0]
 
-  let index = farms.findIndex((f: Farm) =>
+  // TODO: Add safety when no farm is found!
+  let farmIndex = farms.findIndex((f: Farm) =>
     props.farmId?.includes(f.getFarmID())
   )
-  let selectedFarm = farms[index]
+  let selectedFarm = farms[farmIndex]
 
-  availabilities.Add =
-    selectedFarm!.numberOfParticipatingCows() < selectedFarm!.getCows().length
-  availabilities.Remove = selectedFarm!.numberOfParticipatingCows() > 0
+  // TODO: Add safety when no cow is found!
+  let cows = selectedFarm.getCows()
+  let cowIndex = cows.findIndex((c: Cow) => c.getCowID() === props.cowId)
+  let selectedCow = cows[cowIndex]
 
-  if (randomization.mode() === 'COWS') {
-    //staat randomizer in cow mode?
-    availabilities.Randomizer = false
+  if (selectedCow) {
+    if (selectedCow.isParticipating()) {
+      availabilities.isAdd = false
+      if (randomization.mode() === 'FARMS') {
+        //staat randomizer in farm mode?
+        availabilities.Randomizer = false
+        availabilities.AddToggle = true
 
-    //wel manueel veranderen:
-    availabilities.ChallengeHigh = !selectedFarm!.allHighChallenge()
-    availabilities.ChallengeLow = !selectedFarm!.allLowChallenge()
-    availabilities.giveVaccine = !selectedFarm!.allVaccin()
-    availabilities.giveNoVaccine = !selectedFarm?.allNOVaccin()
-  } else {
-    //ze zit in boerderij mode of in niks
-    if (randomization.hasThis(selectedFarm!)) {
-      //ze zit erin
-      availabilities.Randomizer = false
+        availabilities.ChallengeHigh = !selectedCow.hasHighChallenge()
+        availabilities.ChallengeLow = !selectedCow.hasLowChallenge()
+        availabilities.giveVaccine = !selectedCow.getsVaccin()
+        availabilities.giveNoVaccine = !selectedCow.getsNOVaccin()
+      } else {
+        //ze zit in boerderij mode of in niks
+        if (randomization.hasThis(selectedCow)) {
+          //ze zit erin
+          availabilities.AddToggle = true
+          availabilities.ChallengeHigh = true
+          availabilities.ChallengeLow = true
+          availabilities.Randomizer = true
+          availabilities.giveVaccine = true
+          availabilities.giveNoVaccine = true
+        } else {
+          availabilities.Randomizer = true
+          availabilities.AddToggle = true
+
+          //wel manueel veranderen:
+          availabilities.ChallengeHigh = !selectedCow.hasHighChallenge()
+          availabilities.ChallengeLow = !selectedCow.hasLowChallenge()
+          availabilities.giveVaccine = !selectedCow.getsVaccin()
+          availabilities.giveNoVaccine = !selectedCow.getsNOVaccin()
+        }
+      } //einde boerderijmode
+    } //einde if
+    else {
+      //koe moet deelnemen om maueel toe te kennen
+      availabilities.isAdd = true
+      availabilities.AddToggle = true
+
       availabilities.ChallengeHigh = false
       availabilities.ChallengeLow = false
+      availabilities.Randomizer = false
       availabilities.giveVaccine = false
       availabilities.giveNoVaccine = false
-    } else {
-      //ze zit niet in randomiser
-      availabilities.Randomizer = true //niet in random
-      //wel manueel veranderen:
-      availabilities.ChallengeHigh = !selectedFarm!.allHighChallenge()
-      availabilities.ChallengeLow = !selectedFarm!.allLowChallenge()
-      availabilities.giveVaccine = !selectedFarm!.allVaccin()
-      availabilities.giveNoVaccine = !selectedFarm?.allNOVaccin()
     }
-  } //einde boerderijmode
+  }
 
   const AddButton = () => {
     let newFarms = [...farms]
-    let f = newFarms[index]
-    let newFarm = f.copy()
+    let f = newFarms[farmIndex].copy()
+    let newCows = [...cows]
+    let newCow = selectedCow.copy()
     let newExperiment = experiment.copy()
-    if (newFarm.addAllToExperiment(newExperiment)) {
-      // TODO: JOptionspane
-      // Object[] options = { "OK" };
-      // int result = JOptionPane.showOptionDialog(null,"At least one Cow allready had some properties before you removed it. These properties will reappear.", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);// geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
+
+    if (!newCow.isParticipating()) {
+      if (
+        newCow.getsNOVaccin() ||
+        newCow.getsVaccin() ||
+        newCow.hasLowChallenge() ||
+        newCow.hasHighChallenge()
+      ) {
+        //er is een warning
+        // TODO: Add warning for JOptionspane
+        // Object[] options = { "OK" };
+        // int result = JOptionPane.showOptionDialog(null,"This Cow allready had some properties before you removed it. These properties will reappear.", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);// geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
+      } //warning
+
+      newCow.addToExperiment(newExperiment)
+    } else {
+      newCow.removeOutOfExperiment(newExperiment)
     }
-    newFarms[index] = newFarm
+
+    newCows[cowIndex] = newCow
+    f.cows = newCows
+    newFarms[farmIndex] = f
     setFarms(newFarms)
     setExperiment(newExperiment)
   }
 
-  const RemoveButton = () => {
-    let newFarms = [...farms]
-    let newFarm = newFarms[index].copy()
-    let newExperiment = experiment.copy()
-
-    newFarm.removeAllOutOfExperiment(newExperiment)
-    newFarms[index] = newFarm
-    setFarms(newFarms)
-    setExperiment(newExperiment)
-  }
   const GiveVaccineButton = () => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     let newFarms = [...farms]
-    let newFarm = newFarms[index].copy()
+    let f = newFarms[farmIndex].copy()
+    let newCows = [...cows]
+    let newCow = selectedCow.copy()
     // TODO: add warning for vaccine
+    //toon waarschuwing als het een niet manueel toegekende vaccin had
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
-    // if ((boe.hasVaccinRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Vaccin. If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
+    // if ((koe.getsNOVaccin())&&(koe.vaccin.randomized())&&(JOptionPane.showOptionDialog(null, "This Cow has been assigned NO vaccin by randomization! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
-    // else {boe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setVaccin(true, null)
-    newFarms[index] = newFarm
+    // else {koe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
+    newCow.setVaccin(true, null)
+
+    newCows[cowIndex] = newCow
+    f.cows = newCows
+    newFarms[farmIndex] = f
     setFarms(newFarms)
   }
   const GiveNoVaccineButton = () => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     let newFarms = [...farms]
-    let newFarm = newFarms[index].copy()
-    // TODO: add warning for vaccine
+    let f = newFarms[farmIndex].copy()
+    let newCows = [...cows]
+    let newCow = selectedCow.copy()
+    //toon waarschuwing als het een niet manueel toegekende vaccin had
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
-    // if ((boe.hasVaccinRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Vaccin. If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
+    // if ((koe.getsVaccin())&&(koe.vaccin.randomized())&&(JOptionPane.showOptionDialog(null, "This Cow has been assigned a vaccin by randomization! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
-    // else {boe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setVaccin(false, null)
-    newFarms[index] = newFarm
+    // else {koe.setVaccin(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
+    newCow.setVaccin(false, null)
+
+    newCows[cowIndex] = newCow
+    f.cows = newCows
+    newFarms[farmIndex] = f
     setFarms(newFarms)
   }
   const ChallengeHighButton = () => {
     //toon waarschuwing als het een niet manueel toegekende challenge had
     //  Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     let newFarms = [...farms]
-    let newFarm = newFarms[index].copy()
+    let newFarm = newFarms[farmIndex].copy()
 
     // TODO: Add warning for challenge
     //  if ((newFarm.hasChallengeRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Challenge! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
@@ -195,7 +235,7 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     //        }
     // else {boe.setChallenge(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
     newFarm.setChallenge(true, null)
-    newFarms[index] = newFarm
+    newFarms[farmIndex] = newFarm
     setFarms(newFarms)
     // freem.updateFarm(boe)
   }
@@ -203,7 +243,7 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     //toon waarschuwing als het een niet manueel toegekende challenge had
     //  Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     let newFarms = [...farms]
-    let newFarm = newFarms[index].copy()
+    let newFarm = newFarms[farmIndex].copy()
 
     // TODO: Add warning for challenge
     //  if ((newFarm.hasChallengeRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Challenge! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
@@ -211,14 +251,14 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     //        }
     // else {boe.setChallenge(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
     newFarm.setChallenge(false, null)
-    newFarms[index] = newFarm
+    newFarms[farmIndex] = newFarm
     setFarms(newFarms)
     // freem.updateFarm(boe)
   }
   const RandomizerButton = () => {
     let newRandomizations = [...randomizations]
     let newRandomization = randomization.copy()
-    newRandomization.addToSelection(farms[index])
+    newRandomization.addToSelection(farms[farmIndex])
 
     newRandomizations[0] = newRandomization
     setRandomizations(newRandomizations)
@@ -228,13 +268,10 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     <>
       <FirstBox>
         <div>
-          <Button onClick={AddButton} disabled={!availabilities.Add}>
-            Add all cows to experiment
-          </Button>
-        </div>
-        <div>
-          <Button onClick={RemoveButton} disabled={!availabilities.Remove}>
-            Remove all cows out of experiment
+          <Button onClick={AddButton} disabled={!availabilities.AddToggle}>
+            {availabilities.isAdd
+              ? 'Add to experiment'
+              : 'Remove from experiment'}
           </Button>
         </div>
         <div>
@@ -250,7 +287,7 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
             onClick={GiveNoVaccineButton}
             disabled={!availabilities.giveNoVaccine}
           >
-            Give no vaccine
+            Give NO vaccine
           </Button>
         </div>
         <div>
@@ -278,17 +315,20 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
           </Button>
         </div>
       </FirstBox>
-
-      <MiddleBox></MiddleBox>
-      <SecondBox>
-        {props.farmId ? (
-          <img src={path + props.farmId + '.jpg'} />
-        ) : (
-          <img src={path + 'farm1342.jpg'} />
-        )}
-      </SecondBox>
+      {props.cowId ? (
+        <></>
+      ) : (
+        <>
+          <MiddleBox></MiddleBox>
+          <SecondBox>
+            {props.farmId ? (
+              <img src={path + props.farmId + '.jpg'} />
+            ) : (
+              <img src={path + 'farm1342.jpg'} />
+            )}
+          </SecondBox>
+        </>
+      )}
     </>
   )
 }
-
-export default ButtonPage

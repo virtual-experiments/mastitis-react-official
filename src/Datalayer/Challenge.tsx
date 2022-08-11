@@ -6,14 +6,14 @@ import { Randomization } from './Randomization'
 export class Challenge {
   /**************************  attributes    ***************************/
   #hi: boolean //this variabele indicates if it's a low or a high challenge
-  #rand: Randomization //when the challenge is randomized, this links back to the randomization, else this is null
+  #rand: Randomization | null = null //when the challenge is randomized, this links back to the randomization, else this is null
 
   /**************************  constructors ***************************/
   /**
    * @param high indicates if it's a high or a low challenge
    * @param random : when the challenge is randomized, this links back to the randomization, else null
    */
-  constructor(high: boolean, random: Randomization) {
+  constructor(high: boolean, random: Randomization | null) {
     this.#hi = high
     this.#rand = random
   }
@@ -38,7 +38,7 @@ export class Challenge {
    * When the challenge is automatically assigned by a randomization, this randomization is returned,
    * else result is null.
    */
-  getRandomization(): Randomization {
+  getRandomization(): Randomization | null {
     return this.#rand
   } // end getRandomization
 }

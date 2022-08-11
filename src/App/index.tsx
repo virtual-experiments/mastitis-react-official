@@ -8,13 +8,22 @@ import { LocalStorageKey } from '../dataStructure'
 import Copyright from './Copyright'
 import { Layout } from './style'
 import Sidebar from './Sidebar'
-import FarmInfo from './FarmInfo'
+import { CowInfo, FarmInfo, RegionInfo } from './ObjectInfo'
 import ButtonPage from './ButtonPage'
 import { AppProps } from '..'
+import styled from 'styled-components'
+import { CowButtonPage } from './CowButtonPage'
 
 interface Props {
   path: string
 }
+
+const FlexBox = styled.div`
+  display: flex;
+  max-width: 1000px;
+  margin: 40px auto 0 auto;
+  justify-content: space-between;
+`
 
 const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   // const appState = useRecoilValue<AppState>(recoilState)
@@ -26,8 +35,6 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   //     JSON.stringify(appState) // convert JavaScript Object to string
   //   )
   // }, [appState])
-  console.log(props)
-
   return (
     <Layout>
       <div className="column-layout">
@@ -35,13 +42,35 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
           <Sidebar path={props.uri!} />
         </div>
         <div className="rightContent">
+          {/* <div></div> */}
           <section className="todoapp">
             {props.path === '/' ? (
-              <div>Region View</div>
+              <>
+                <RegionInfo />
+                <FlexBox>
+                  <img src={'images/kaart.jpg'} />
+                </FlexBox>
+              </>
             ) : (
               <>
-                <FarmInfo farmId={props.farmId} />
-                <ButtonPage farmId={props.farmId} cowId={props.cowId} />
+                {props.cowId ? (
+                  <>
+                    <CowInfo farmId={props.farmId} cowId={props.cowId} />
+                    <FlexBox>
+                      <CowButtonPage
+                        farmId={props.farmId}
+                        cowId={props.cowId}
+                      />
+                    </FlexBox>
+                  </>
+                ) : (
+                  <>
+                    <FarmInfo farmId={props.farmId} />
+                    <FlexBox>
+                      <ButtonPage farmId={props.farmId} />
+                    </FlexBox>
+                  </>
+                )}
               </>
             )}
 
