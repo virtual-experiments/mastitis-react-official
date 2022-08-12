@@ -38,7 +38,8 @@ export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
     farm.farmId?.includes(f.getFarmID())
   )
   return (
-    <Centered>
+    // <Centered>
+    <>
       <div>Farm number: {selectedFarm?.getFarmID()}</div>
       <div>BNO: {selectedFarm?.getBNO()}</div>
       <div>AAmilk?: {selectedFarm?.getAAmilk() ? 'True' : 'False'}</div>
@@ -65,7 +66,8 @@ export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
           </tr>
         </tbody>
       </table>
-    </Centered>
+      {/* </Centered> */}
+    </>
   )
 }
 
@@ -106,7 +108,7 @@ export const CowInfo: React.FC<CowProps> = (props: CowProps) => {
   }
 
   return (
-    <Centered>
+    <>
       <div>Earnumber: BE{selectedCow?.getCowID()}</div>
       <div>Production: {selectedCow?.initproduction} ml/day</div>
       <div>Parity: {selectedCow?.getParity()}</div>
@@ -120,7 +122,7 @@ export const CowInfo: React.FC<CowProps> = (props: CowProps) => {
       ) : (
         <div>Does NOT participate!</div>
       )}
-    </Centered>
+    </>
   )
 }
 
