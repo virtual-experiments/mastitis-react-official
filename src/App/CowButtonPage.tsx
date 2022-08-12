@@ -107,7 +107,6 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
   let cowIndex = cows.findIndex((c: Cow) => c.getCowID() === props.cowId)
   let selectedCow = cows[cowIndex]
 
-  console.log(randomization.mode())
   if (selectedCow) {
     if (selectedCow.isParticipating()) {
       availabilities.isAdd = false
@@ -193,6 +192,9 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     let f = newFarms[farmIndex].copy()
     let newCows = [...cows]
     let newCow = selectedCow.copy()
+    let exp = experiment.copy()
+    console.log('Exp before: ')
+    console.log(experiment)
     // TODO: add warning for vaccine
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
@@ -200,12 +202,16 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     //       //hierin doen we dus niks
     //       }
     // else {koe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newCow.setVaccin(true, null)
+    newCow.setVaccin(true, null, exp)
 
     newCows[cowIndex] = newCow
     f.cows = newCows
     newFarms[farmIndex] = f
     setFarms(newFarms)
+    setExperiment(exp)
+
+    console.log('Exp after: ')
+    console.log(exp)
   }
   const GiveNoVaccineButton = () => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
@@ -213,18 +219,20 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     let f = newFarms[farmIndex].copy()
     let newCows = [...cows]
     let newCow = selectedCow.copy()
+    let exp = experiment.copy()
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     // if ((koe.getsVaccin())&&(koe.vaccin.randomized())&&(JOptionPane.showOptionDialog(null, "This Cow has been assigned a vaccin by randomization! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
     // else {koe.setVaccin(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newCow.setVaccin(false, null)
+    newCow.setVaccin(false, null, exp)
 
     newCows[cowIndex] = newCow
     f.cows = newCows
     newFarms[farmIndex] = f
     setFarms(newFarms)
+    setExperiment(exp)
   }
 
   const ChallengeHighButton = () => {
@@ -234,19 +242,20 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     let f = newFarms[farmIndex].copy()
     let newCows = [...cows]
     let newCow = selectedCow.copy()
-
+    let exp = experiment.copy()
     // TODO: Add warning for challenge
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     // if ((koe.hasLowChallenge())&&(koe.challenge.randomized())&&(JOptionPane.showOptionDialog(null, "This Cow has been assigned a low Challenge by randomization! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
     // else {koe.setChallenge(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newCow.setChallenge(true, null)
+    newCow.setChallenge(true, null, exp)
 
     newCows[cowIndex] = newCow
     f.cows = newCows
     newFarms[farmIndex] = f
     setFarms(newFarms)
+    setExperiment(exp)
   }
   const ChallengeLowButton = () => {
     //toon waarschuwing als het een niet manueel toegekende challenge had
@@ -255,19 +264,20 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     let f = newFarms[farmIndex].copy()
     let newCows = [...cows]
     let newCow = selectedCow.copy()
-
+    let exp = experiment.copy()
     // TODO: Add warning for challenge
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     // if ((koe.hasLowChallenge())&&(koe.challenge.randomized())&&(JOptionPane.showOptionDialog(null, "This Cow has been assigned a low Challenge by randomization! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
     // else {koe.setChallenge(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newCow.setChallenge(false, null)
+    newCow.setChallenge(false, null, exp)
 
     newCows[cowIndex] = newCow
     f.cows = newCows
     newFarms[farmIndex] = f
     setFarms(newFarms)
+    setExperiment(exp)
   }
   const RandomizerButton = () => {
     let newRandomizations = [...randomizations]
@@ -280,7 +290,6 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
 
     newRandomizations[0] = newRandomization
     setRandomizations(newRandomizations)
-    console.log(newRandomization)
   }
 
   return (

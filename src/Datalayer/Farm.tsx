@@ -1,6 +1,8 @@
+import { Challenge } from './Challenge'
 import { Cow } from './Cow'
 import { Experiment } from './Experiment'
 import { Randomization } from './Randomization'
+import { Vaccin } from './Vaccin'
 
 /**
  * The class who represents the properties of the farm.
@@ -45,6 +47,22 @@ export class Farm {
   toString(): string {
     return 'Farm nr ' + this.getFarmID()
   } // end toString
+
+  updateCow(cow: Cow, oldExperiment?: Experiment) {
+    let index = this.cows.findIndex((c: Cow) => c.getCowID() === cow.getCowID())
+    let newCows = [...this.cows]
+    newCows[index] = cow
+
+    if (this.cows[index].participates) {
+      oldExperiment?.updateCow(cow)
+    }
+
+    this.cows = newCows
+  }
+
+  findCow(ID: string): Cow | undefined {
+    return this.cows.find((c: Cow) => c.getCowID() === ID)
+  }
 
   /**
    * This method returns a String representation of ID off the Farm
@@ -297,10 +315,14 @@ export class Farm {
    * @param chal true is high challenge, low is false
    * @param ran is the link to the randomization (when this property is manually set, null has to be passed)
    */
-  setChallenge(chal: boolean, ran: Randomization | null): void {
+  setChallenge(
+    chal: boolean,
+    ran: Randomization | null,
+    exp: Experiment
+  ): void {
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i].copy()
-      koe.setChallenge(chal, ran)
+      koe.setChallenge(chal, ran, exp)
       this.cows[i] = koe
     }
   } // end setChallenge
@@ -350,10 +372,10 @@ export class Farm {
    * @param ja : true if vaccin, else false
    * @param ran is the link to the randomization (when this property is manually set, null has to be passed)
    */
-  setVaccin(ja: boolean, ran: Randomization | null): void {
+  setVaccin(ja: boolean, ran: Randomization | null, exp: Experiment): void {
     for (let i = 0; i < this.cows.length; i++) {
       let koe = this.cows[i].copy()
-      koe.setVaccin(ja, ran)
+      koe.setVaccin(ja, ran, exp)
       this.cows[i] = koe
     }
   } // end setVaccin

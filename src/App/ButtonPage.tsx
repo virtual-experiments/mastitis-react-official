@@ -175,44 +175,49 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     let newFarms = [...farms]
     let newFarm = newFarms[index].copy()
+    let newExp = experiment.copy()
     // TODO: add warning for vaccine
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     // if ((boe.hasVaccinRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Vaccin. If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
     // else {boe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setVaccin(true, null)
+    newFarm.setVaccin(true, null, newExp)
     newFarms[index] = newFarm
     setFarms(newFarms)
+    setExperiment(newExp)
   }
   const GiveNoVaccineButton = () => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     let newFarms = [...farms]
     let newFarm = newFarms[index].copy()
+    let newExp = experiment.copy()
     // TODO: add warning for vaccine
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     // if ((boe.hasVaccinRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Vaccin. If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //       //hierin doen we dus niks
     //       }
     // else {boe.setVaccin(true,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setVaccin(false, null)
+    newFarm.setVaccin(false, null, newExp)
     newFarms[index] = newFarm
     setFarms(newFarms)
+    setExperiment(newExp)
   }
   const ChallengeHighButton = () => {
     //toon waarschuwing als het een niet manueel toegekende challenge had
     //  Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     let newFarms = [...farms]
     let newFarm = newFarms[index].copy()
-
+    let newExp = experiment.copy()
     // TODO: Add warning for challenge
     //  if ((newFarm.hasChallengeRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Challenge! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //        //hierin doen we dus niks
     //        }
     // else {boe.setChallenge(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setChallenge(true, null)
+    newFarm.setChallenge(true, null, newExp)
     newFarms[index] = newFarm
     setFarms(newFarms)
+    setExperiment(newExp)
     // freem.updateFarm(boe)
   }
   const ChallengeLowButton = () => {
@@ -220,15 +225,16 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
     //  Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
     let newFarms = [...farms]
     let newFarm = newFarms[index].copy()
-
+    let newExp = experiment.copy()
     // TODO: Add warning for challenge
     //  if ((newFarm.hasChallengeRandomizations()>0)&&(JOptionPane.showOptionDialog(null, "This Farm (or some cows in it) are involved in a Randomization concerning the Challenge! If you proceed, the whole randomization will be undone. Are you sure?", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0])==JOptionPane.NO_OPTION)) {
     //        //hierin doen we dus niks
     //        }
     // else {boe.setChallenge(false,null);}//of ze had nog niks, oftwas manueel,of ze hebben Yes geklikt
-    newFarm.setChallenge(false, null)
+    newFarm.setChallenge(false, null, newExp)
     newFarms[index] = newFarm
     setFarms(newFarms)
+    setExperiment(newExp)
     // freem.updateFarm(boe)
   }
   const RandomizerButton = () => {

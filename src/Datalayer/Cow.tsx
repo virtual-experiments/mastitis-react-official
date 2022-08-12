@@ -207,11 +207,17 @@ export class Cow {
    * @param high is true when the cow gets a hign vaccin, false if it gets a low
    * @param ran is the link to the randomization, when this challenge is manually set, this is null
    */
-  setChallenge(high: boolean, ran: Randomization | null): void {
+  setChallenge(
+    high: boolean,
+    ran: Randomization | null,
+    exp: Experiment
+  ): void {
     if (this.challenge != null && this.challenge.randomized()) {
       this.challenge.getRandomization()!.undo()
     }
     this.challenge = new Challenge(high, ran)
+
+    if (this.participates) exp.updateCow(this)
   } // end setChallenge
 
   /**
@@ -221,11 +227,12 @@ export class Cow {
    * @param vac the boolean that indicates if the cow gets the vaccin
    * @param ran is the link to the randomization, when this vaccin is manually set, pass null
    */
-  setVaccin(vac: boolean, ran: Randomization | null): void {
+  setVaccin(vac: boolean, ran: Randomization | null, exp: Experiment): void {
     if (this.vaccin != null && this.vaccin.randomized()) {
       this.vaccin.getRandomization()!.undo()
     }
     this.vaccin = new Vaccin(vac, ran)
+    if (this.participates) exp.updateCow(this)
   } // end setVaccin
 
   /**

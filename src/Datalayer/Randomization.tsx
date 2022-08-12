@@ -1,4 +1,5 @@
 import { Cow } from './Cow'
+import { Experiment } from './Experiment'
 import { Farm } from './Farm'
 
 /**
@@ -89,7 +90,7 @@ export class Randomization {
    * It allso shows a dialog(with the results) to warn the user ! If he clicks cancel nothing happens.
    * @param aantal has to be between 0 and the number of selected farms/cows
    */
-  randomizeV(aantal: number): boolean {
+  randomizeV(aantal: number, exp: Experiment): boolean {
     //eerst stellen we een vector op met 'aantal' verschillende random getalen tussen 0 en size
 
     let getallen = this.getRandomValues(aantal)
@@ -101,14 +102,14 @@ export class Randomization {
         //welke mode
         for (let i = 0; i < this.farms.length; i++) {
           let boe = this.farms[i]
-          boe.setVaccin(false, this)
+          boe.setVaccin(false, this, exp)
         }
       }
       if (this.cows != null) {
         //welke mode
         for (let i = 0; i < this.cows.length; i++) {
           let koe = this.cows[i]
-          koe.setVaccin(false, this)
+          koe.setVaccin(false, this, exp)
         }
       }
       //nu gaan we de gerandomiseerden vaccineren:
@@ -117,12 +118,12 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setVaccin(true, this)
+          boe.setVaccin(true, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setVaccin(true, this)
+          koe.setVaccin(true, this, exp)
         }
       } //end for
       this.status = 1
@@ -143,7 +144,7 @@ export class Randomization {
    * @param aantal has to be between 0 and the number of selected farms/cows
    * @result indicates if a randomization has been done
    */
-  randomizeC(aantal: number): boolean {
+  randomizeC(aantal: number, exp: Experiment): boolean {
     //eerst stellen we een vector op met 'aantal' verschillende random getalen tussen 0 en size
     let getallen = this.getRandomValues(aantal)
 
@@ -155,14 +156,14 @@ export class Randomization {
         //welke mode
         for (let i = 0; i < this.farms.length; i++) {
           let boe = this.farms[i]
-          boe.setChallenge(false, this)
+          boe.setChallenge(false, this, exp)
         }
       }
       if (this.cows != null) {
         //welke mode
         for (let i = 0; i < this.cows.length; i++) {
           let koe = this.cows[i]
-          koe.setChallenge(false, this)
+          koe.setChallenge(false, this, exp)
         }
       }
       //nu gaan we de gerandomiseerden vaccineren:
@@ -171,12 +172,12 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setChallenge(true, this)
+          boe.setChallenge(true, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setChallenge(true, this)
+          koe.setChallenge(true, this, exp)
         }
       } //end for
       this.status = 2
@@ -201,7 +202,12 @@ export class Randomization {
    * the sum of the 3 arguments has to be between 0 and the number of selected farms/cows
    * @result indicates if a randomization has been done
    */
-  randomizeVC(HiNo: number, HiYe: number, LoNo: number): boolean {
+  randomizeVC(
+    HiNo: number,
+    HiYe: number,
+    LoNo: number,
+    exp: Experiment
+  ): boolean {
     let LoYe = this.size() - HiNo - HiYe - LoNo
     //eerst stellen we 3 vectoren op met 'hino','hiye' en 'lono' verschillende random getalen tussen 0 en size
     let getallenhino: number[] = []
@@ -260,14 +266,14 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setChallenge(true, this)
-          boe.setVaccin(false, this)
+          boe.setChallenge(true, this, exp)
+          boe.setVaccin(false, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setChallenge(true, this)
-          koe.setVaccin(false, this)
+          koe.setChallenge(true, this, exp)
+          koe.setVaccin(false, this, exp)
         }
       } //end HINO
 
@@ -276,14 +282,14 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setChallenge(true, this)
-          boe.setVaccin(true, this)
+          boe.setChallenge(true, this, exp)
+          boe.setVaccin(true, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setChallenge(true, this)
-          koe.setVaccin(true, this)
+          koe.setChallenge(true, this, exp)
+          koe.setVaccin(true, this, exp)
         }
       } //end HIYES
 
@@ -292,14 +298,14 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setChallenge(false, this)
-          boe.setVaccin(false, this)
+          boe.setChallenge(false, this, exp)
+          boe.setVaccin(false, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setChallenge(false, this)
-          koe.setVaccin(false, this)
+          koe.setChallenge(false, this, exp)
+          koe.setVaccin(false, this, exp)
         }
       } //end LONO
 
@@ -308,14 +314,14 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           let boe = this.farms[get]
-          boe.setChallenge(false, this)
-          boe.setVaccin(true, this)
+          boe.setChallenge(false, this, exp)
+          boe.setVaccin(true, this, exp)
         }
         if (this.cows != null) {
           //welke mode
           let koe = this.cows[get]
-          koe.setChallenge(false, this)
-          koe.setVaccin(true, this)
+          koe.setChallenge(false, this, exp)
+          koe.setVaccin(true, this, exp)
         }
       } //end LoYe
       this.status = 3

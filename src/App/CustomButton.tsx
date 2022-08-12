@@ -27,7 +27,7 @@ export function CustomButton(props: ButtonProps) {
       //   color="#64748B"
       onClick={props.onClick}
       disabled={props.disabled}
-      sx={{ width: '300px' }}
+      sx={{ width: '300px', borderRadius: 0.5 }}
     >
       {props.children}
     </Button>

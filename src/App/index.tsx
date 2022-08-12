@@ -5,7 +5,6 @@ import { useRecoilValue } from 'recoil'
 import type { AppState, Routes } from '../dataStructure'
 import { LocalStorageKey } from '../dataStructure'
 
-import Copyright from './Copyright'
 import { Layout } from './style'
 import Sidebar from './Sidebar'
 import { CowInfo, FarmInfo, RegionInfo } from './ObjectInfo'
@@ -25,6 +24,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
+import { RandomizerPage } from './Navigationbar/RandomizerPage'
 
 interface Props {
   path: string
@@ -47,6 +47,30 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   //     JSON.stringify(appState) // convert JavaScript Object to string
   //   )
   // }, [appState])
+
+  const getTopView = (props: AppProps) => {
+    if (props.path === '/') {
+      return <RegionInfo />
+    } else if (props.path === '/randomizer') {
+      return <></> //<RegionInfo />
+    } else if (props.cowId) {
+      return <CowInfo farmId={props.farmId} cowId={props.cowId} />
+    } else {
+      return <FarmInfo farmId={props.farmId} />
+    }
+  }
+
+  const getBottomView = (props: AppProps) => {
+    if (props.path === '/') {
+      return <img src={'images/kaart.jpg'} />
+    } else if (props.path === '/randomizer') {
+      return <RandomizerPage />
+    } else if (props.cowId) {
+      return <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
+    } else {
+      return <ButtonPage farmId={props.farmId} />
+    }
+  }
 
   const drawerWidth = 300
   return (
@@ -72,113 +96,12 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>
         <Toolbar variant="dense" />
-        {props.path === '/' ? (
-          <>
-            <Stack spacing={2} divider={<Divider flexItem />}>
-              <Item elevation={elev}>
-                <RegionInfo />
-              </Item>
-              <Item elevation={elev}>
-                <img src={'images/kaart.jpg'} />
-              </Item>
-            </Stack>
-          </>
-        ) : (
-          <>
-            {props.cowId ? (
-              <>
-                <Stack spacing={2} divider={<Divider flexItem />}>
-                  <Item elevation={elev}>
-                    <CowInfo farmId={props.farmId} cowId={props.cowId} />
-                  </Item>
-                  <Item elevation={elev}>
-                    <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
-                  </Item>
-                </Stack>
-              </>
-            ) : (
-              <>
-                <Stack spacing={2} divider={<Divider flexItem />}>
-                  <Item elevation={elev}>
-                    <FarmInfo farmId={props.farmId} />
-                  </Item>
-                  <Item elevation={elev}>
-                    <ButtonPage farmId={props.farmId} />
-                  </Item>
-                </Stack>
-              </>
-            )}
-          </>
-        )}
-        {/* <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography> */}
+        <Stack spacing={2} divider={<Divider flexItem />}>
+          <Item elevation={elev}>{getTopView(props)}</Item>
+          <Item elevation={elev}>{getBottomView(props)}</Item>
+        </Stack>
       </Box>
     </Box>
-    // <Layout>
-    //   <ResponsiveAppBar />
-    //   <div className="column-layout">
-    //     <div className="leftContent">
-    //       <Sidebar path={props.uri!} />
-    //     </div>
-    //     <div className="rightContent">
-    //       {/* <div></div> */}
-
-    // {props.path === '/' ? (
-    //   <>
-    //     <RegionInfo />
-    //     <FlexBox>
-    //       <img src={'images/kaart.jpg'} />
-    //     </FlexBox>
-    //   </>
-    // ) : (
-    //   <>
-    //     {props.cowId ? (
-    //       <>
-    //         <CowInfo farmId={props.farmId} cowId={props.cowId} />
-    //         <FlexBox>
-    //           <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
-    //         </FlexBox>
-    //       </>
-    //     ) : (
-    //       <>
-    //         <FarmInfo farmId={props.farmId} />
-    //         <FlexBox>
-    //           <ButtonPage farmId={props.farmId} />
-    //         </FlexBox>
-    //       </>
-    //     )}
-    //   </>
-    // )}
-    //     </div>
-    //   </div>
-    // </Layout>
   )
 }
 

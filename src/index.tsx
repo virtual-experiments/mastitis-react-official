@@ -5,7 +5,6 @@ import { RecoilRoot } from 'recoil'
 
 import './index.css'
 import App from './App'
-import { DataLoader } from './App/DataLoader'
 import ErrorBoundary from './ErrorBoundary'
 import { NotFound } from './NotFound'
 import * as serviceWorker from './serviceWorkerRegistration'
@@ -22,7 +21,8 @@ root.render(
     <RecoilRoot>
       <Router>
         <App path="/" />
-        <App path="/region" />
+        {/* <App path="/region" /> */}
+        <App path="/randomizer" />
         <App path="/:farmId" />
         <App path="/:farmId/:cowId" />
         <NotFound default />
