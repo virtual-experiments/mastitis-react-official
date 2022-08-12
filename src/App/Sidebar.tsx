@@ -26,7 +26,7 @@ const Sidebar: React.FC<AppProps> = (props) => {
       {
         title: 'Region view',
         itemId: '/',
-        elemBefore: () => <img src=".././images/kaart.gif" height="30px" />,
+        elemBefore: () => <img src=".././images/kaart.gif" height="40px" />,
       },
     ]
 
@@ -35,7 +35,7 @@ const Sidebar: React.FC<AppProps> = (props) => {
         title: 'Farm nr ' + f.getFarmID(),
         itemId: '/' + f.getFarmID(),
         subNav: cowsToNavbar(f.getFarmID(), f.getCows()),
-        elemBefore: () => <img src=".././images/koefarm.gif" height="30px" />,
+        elemBefore: () => <img src=".././images/koefarm.gif" height="35px" />,
       }
     })
 
@@ -81,7 +81,7 @@ function cowsToNavbar(prevId: string, cows: Cow[]): NavItemProps[] {
     return {
       title: 'BE' + c.getCowID(),
       itemId: '/' + prevId + '/' + c.getCowID(),
-      elemBefore: () => <img src={'.././images/' + icon} height="25px" />,
+      elemBefore: () => <img src={'.././images/' + icon} height="30px" />,
     }
   })
 }
