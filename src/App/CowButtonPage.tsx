@@ -14,6 +14,8 @@ import { AppProps } from '..'
 import { Cow } from '../Datalayer/Cow'
 import { Farm } from '../Datalayer/Farm'
 import { Challenge } from '../Datalayer/Challenge'
+import { CustomButton } from './CustomButton'
+import Stack from '@mui/material/Stack'
 
 //const logo = require('images/farm1342.jpg')
 
@@ -283,55 +285,48 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
 
   return (
     <>
-      <FirstBox>
-        <div>
-          <Button onClick={AddButton} disabled={!availabilities.AddToggle}>
-            {availabilities.isAdd
-              ? 'Add to experiment'
-              : 'Remove from experiment'}
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={GiveVaccineButton}
-            disabled={!availabilities.giveVaccine}
-          >
-            Give the vaccine
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={GiveNoVaccineButton}
-            disabled={!availabilities.giveNoVaccine}
-          >
-            Give NO vaccine
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={ChallengeHighButton}
-            disabled={!availabilities.ChallengeHigh}
-          >
-            Set Challenge High
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={ChallengeLowButton}
-            disabled={!availabilities.ChallengeLow}
-          >
-            Set Challenge Low
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={RandomizerButton}
-            disabled={!availabilities.Randomizer}
-          >
-            Put in randomizer
-          </Button>
-        </div>
-      </FirstBox>
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        sx={{ display: 'flex' }}
+      >
+        <CustomButton onClick={AddButton} disabled={!availabilities.AddToggle}>
+          {availabilities.isAdd
+            ? 'Add to experiment'
+            : 'Remove from experiment'}
+        </CustomButton>
+        <CustomButton
+          onClick={GiveVaccineButton}
+          disabled={!availabilities.giveVaccine}
+        >
+          Give the vaccine
+        </CustomButton>
+        <CustomButton
+          onClick={GiveNoVaccineButton}
+          disabled={!availabilities.giveNoVaccine}
+        >
+          Give NO vaccine
+        </CustomButton>
+        <CustomButton
+          onClick={ChallengeHighButton}
+          disabled={!availabilities.ChallengeHigh}
+        >
+          Set Challenge High
+        </CustomButton>
+        <CustomButton
+          onClick={ChallengeLowButton}
+          disabled={!availabilities.ChallengeLow}
+        >
+          Set Challenge Low
+        </CustomButton>
+        <CustomButton
+          onClick={RandomizerButton}
+          disabled={!availabilities.Randomizer}
+        >
+          Put in randomizer
+        </CustomButton>
+      </Stack>
       {props.cowId ? (
         <></>
       ) : (

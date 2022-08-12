@@ -30,9 +30,11 @@ interface Props {
   path: string
 }
 
+const elev = 0
 const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   // lineHeight: '60px',
+  padding: 20,
 }))
 
 const App: React.FC<AppProps & RouteComponentProps> = (props) => {
@@ -68,15 +70,15 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
           <Sidebar path={props.uri!} />
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <Toolbar variant="dense" />
         {props.path === '/' ? (
           <>
             <Stack spacing={2} divider={<Divider flexItem />}>
-              <Item elevation={3}>
+              <Item elevation={elev}>
                 <RegionInfo />
               </Item>
-              <Item elevation={3}>
+              <Item elevation={elev}>
                 <img src={'images/kaart.jpg'} />
               </Item>
             </Stack>
@@ -86,10 +88,10 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
             {props.cowId ? (
               <>
                 <Stack spacing={2} divider={<Divider flexItem />}>
-                  <Item elevation={3}>
+                  <Item elevation={elev}>
                     <CowInfo farmId={props.farmId} cowId={props.cowId} />
                   </Item>
-                  <Item elevation={3}>
+                  <Item elevation={elev}>
                     <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
                   </Item>
                 </Stack>
@@ -97,10 +99,10 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
             ) : (
               <>
                 <Stack spacing={2} divider={<Divider flexItem />}>
-                  <Item elevation={3}>
+                  <Item elevation={elev}>
                     <FarmInfo farmId={props.farmId} />
                   </Item>
-                  <Item elevation={3}>
+                  <Item elevation={elev}>
                     <ButtonPage farmId={props.farmId} />
                   </Item>
                 </Stack>

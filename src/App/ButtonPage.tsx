@@ -14,6 +14,12 @@ import styled from 'styled-components'
 import { AppProps } from '..'
 import { Cow } from '../Datalayer/Cow'
 import { Farm } from '../Datalayer/Farm'
+import Stack from '@mui/material/Stack'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import { Container } from '@mui/system'
+import Button from '@mui/material/Button'
+import { CustomButton } from './CustomButton'
 
 //const logo = require('images/farm1342.jpg')
 
@@ -25,24 +31,24 @@ interface State {
   onEdit: boolean
 }
 
-const Button = styled.button`
-  background-color: #6e6e6e; //gray;
-  color: white;
-  font-size: 10px;
-  padding: 10px 10px;
-  margin: 5px 0px;
-  width: 250px;
-  cursor: pointer;
+// const Button = styled.button`
+//   background-color: #6e6e6e; //gray;
+//   color: white;
+//   font-size: 10px;
+//   padding: 10px 10px;
+//   margin: 5px 0px;
+//   width: 250px;
+//   cursor: pointer;
 
-  :hover {
-    background-color: #a3a3a3;
-  }
+//   :hover {
+//     background-color: #a3a3a3;
+//   }
 
-  :disabled {
-    background-color: #a3a3a3;
-    cursor: not-allowed;
-  }
-`
+//   :disabled {
+//     background-color: #a3a3a3;
+//     cursor: not-allowed;
+//   }
+// `
 
 // const buttonStyle = {
 //     border: "none";
@@ -73,6 +79,15 @@ const SecondBox = styled.div`
 export interface FarmButtonPageProps {
   farmId?: string
 }
+
+const Item = styled(Box)(({ theme }) => ({
+  textAlign: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  // lineHeight: '60px',
+  // padding: 20,
+}))
 
 const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
@@ -227,7 +242,59 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
 
   return (
     <>
-      <FirstBox>
+      <Stack spacing={2} direction="row">
+        <Item sx={{ flexGrow: 1 }}>
+          <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Stack
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+              sx={{ display: 'flex' }}
+            >
+              <CustomButton onClick={AddButton} disabled={!availabilities.Add}>
+                Add all cows to experiment
+              </CustomButton>
+              <CustomButton
+                onClick={RemoveButton}
+                disabled={!availabilities.Remove}
+              >
+                Remove all cows out of experiment
+              </CustomButton>
+              <CustomButton
+                onClick={GiveVaccineButton}
+                disabled={!availabilities.giveVaccine}
+              >
+                Give the vaccine
+              </CustomButton>
+              <CustomButton
+                onClick={GiveNoVaccineButton}
+                disabled={!availabilities.giveNoVaccine}
+              >
+                Give no vaccine
+              </CustomButton>
+              <CustomButton
+                onClick={ChallengeHighButton}
+                disabled={!availabilities.ChallengeHigh}
+              >
+                Set Challenge High
+              </CustomButton>
+              <CustomButton
+                onClick={ChallengeLowButton}
+                disabled={!availabilities.ChallengeLow}
+              >
+                Set Challenge Low
+              </CustomButton>
+              <CustomButton
+                onClick={RandomizerButton}
+                disabled={!availabilities.Randomizer}
+              >
+                Put in randomizer
+              </CustomButton>
+            </Stack>
+          </Container>
+        </Item>
+
+        {/* <FirstBox>
         <div>
           <Button onClick={AddButton} disabled={!availabilities.Add}>
             Add all cows to experiment
@@ -278,16 +345,24 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
             Put in randomizer
           </Button>
         </div>
-      </FirstBox>
+      </FirstBox> */}
+        <Item sx={{ flexGrow: 4 }}>
+          {props.farmId ? (
+            <img src={path + 'farm' + props.farmId + '.jpg'} />
+          ) : (
+            <img src={path + 'farm1342.jpg'} />
+          )}
+        </Item>
 
-      <MiddleBox></MiddleBox>
+        {/* <MiddleBox></MiddleBox>
       <SecondBox>
         {props.farmId ? (
           <img src={path + 'farm' + props.farmId + '.jpg'} />
         ) : (
           <img src={path + 'farm1342.jpg'} />
         )}
-      </SecondBox>
+      </SecondBox> */}
+      </Stack>
     </>
   )
 }

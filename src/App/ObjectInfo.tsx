@@ -21,15 +21,15 @@ interface State {
   onEdit: boolean
 }
 
-const Centered = styled.div`
-  text-align: center;
-  border-bottom: 6px solid black;
+// const Centered = styled.div`
+//   text-align: center;
+//   border-bottom: 6px solid black;
 
-  table {
-    margin-left: auto;
-    margin-right: auto;
-  }
-`
+//   table {
+//     margin-left: auto;
+//     margin-right: auto;
+//   }
+// `
 
 export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
@@ -130,7 +130,7 @@ export const RegionInfo: React.FC = () => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   let experiment = useRecoilValue(experimentState)
   return (
-    <Centered>
+    <>
       <div>
         The number of cows in the experiment:{' '}
         {experiment.numberOfParticipatingCows()}
@@ -154,6 +154,6 @@ export const RegionInfo: React.FC = () => {
           </tr>
         </tbody>
       </table>
-    </Centered>
+    </>
   )
 }
