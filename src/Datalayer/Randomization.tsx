@@ -1,3 +1,4 @@
+import { getEnvironmentData } from 'worker_threads'
 import { Cow } from './Cow'
 import { Experiment } from './Experiment'
 import { Farm } from './Farm'
@@ -49,6 +50,14 @@ export class Randomization {
     return false
   } //end addToSelection(Cow koe)
 
+  getData(): Cow[] | Farm[] {
+    if (this.cows) {
+      return this.cows
+    } else if (this.farms) {
+      return this.farms
+    }
+    return []
+  }
   /**
    * Returns if the cow is selected.
    */

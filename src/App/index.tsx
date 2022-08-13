@@ -24,7 +24,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
-import { RandomizerPage } from './Navigationbar/RandomizerPage'
+import { RandomizerPage, RandomizerTopPage } from './RandomizerPage'
 
 interface Props {
   path: string
@@ -52,7 +52,7 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
     if (props.path === '/') {
       return <RegionInfo />
     } else if (props.path === '/randomizer') {
-      return <></> //<RegionInfo />
+      return <RandomizerTopPage />
     } else if (props.cowId) {
       return <CowInfo farmId={props.farmId} cowId={props.cowId} />
     } else {

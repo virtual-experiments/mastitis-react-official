@@ -138,7 +138,6 @@ const Navigation: React.FC<SideNavProps> = ({
                   <ul className="side-navigation-panel-select-inner">
                     {item.subNav.map((subNavItem: NavItemProps) => {
                       const SubItemElemBefore = subNavItem.elemBefore
-                      console.log(SubItemElemBefore)
                       return (
                         <li
                           key={subNavItem.itemId}

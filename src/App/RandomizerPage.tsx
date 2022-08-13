@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import './styles.scss'
+// import './styles.scss'
 
 import {
   AppState,
@@ -8,18 +8,17 @@ import {
   farmState,
   randomizationsState,
   selectionState,
-} from '../../dataStructure'
+} from '../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
-import { AppProps } from '../..'
-import { Cow } from '../../Datalayer/Cow'
-import { Farm } from '../../Datalayer/Farm'
+import { Cow } from '../Datalayer/Cow'
+import { Farm } from '../Datalayer/Farm'
 import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import { Container } from '@mui/system'
 import Button from '@mui/material/Button'
-import { CustomButton } from './../CustomButton'
+import { CustomButton } from './CustomButton'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -29,7 +28,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import { Grid, TextField } from '@mui/material'
-import { Randomization } from '../../Datalayer/Randomization'
+import { Randomization } from '../Datalayer/Randomization'
 import { navigate } from '@reach/router'
 
 //const logo = require('images/farm1342.jpg')
@@ -55,6 +54,50 @@ const Item = styled(Box)(({ theme }) => ({
   // padding: 20,
 }))
 
+export const RandomizerTopPage: React.FC = () => {
+  let randomization = useRecoilValue(randomizationsState)[0]
+  let str = '' //hier ook terug wegdoenzonder Jpanel
+  str +=
+    "You've selected " +
+    randomization.size().toString() +
+    ' ' +
+    randomization.mode()
+
+  let data = randomization.getData()
+  let res: string[] = []
+  if (data.length != 0) {
+    for (var koeOrfarm of data) {
+      let tempStr = ''
+      //welke mode
+      if (koeOrfarm instanceof Cow) {
+        tempStr += koeOrfarm.toString()
+        if (
+          koeOrfarm.getsVaccin() ||
+          koeOrfarm.getsNOVaccin() ||
+          koeOrfarm.hasHighChallenge() ||
+          koeOrfarm.hasLowChallenge()
+        ) {
+          tempStr += ' !!! WARNING !! allready assigned some properties'
+        }
+      } else {
+        //welke mode
+        tempStr += koeOrfarm.toString()
+        //hier moeten dus eventueel de andere details ook afgeprint worden
+      }
+      //hier moeten dus eventueel de andere details ook afgeprint worden
+      res.push(tempStr)
+    }
+  }
+  return (
+    <>
+      <div>{str}</div>
+      {res.map((val: string) => {
+        return <div>{val}</div>
+      })}
+    </>
+  )
+}
+
 export const RandomizerPage: React.FC = () => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   const path = 'images/'
@@ -64,7 +107,7 @@ export const RandomizerPage: React.FC = () => {
   let randomization = randomizations[0]
   let [experiment, setExperiment] = useRecoilState(experimentState)
 
-  let [formValue, setFormValue] = useState('')
+  let [formValue, setFormValue] = useState('vaccines')
   let [amount1, setAmount1] = useState(0)
   let [amount2, setAmount2] = useState(0)
   let [amount3, setAmount3] = useState(0)
@@ -72,7 +115,7 @@ export const RandomizerPage: React.FC = () => {
   const dropdownList = (max: number) => {
     const arr = []
     arr.push(0)
-    for (let i = 1; i < max; i++) {
+    for (let i = 1; i <= max; i++) {
       arr.push(i)
     }
     console.log(arr)
@@ -275,7 +318,6 @@ export const RandomizerPage: React.FC = () => {
   let space = 6
   return (
     <>
-      {' '}
       <Box justifyContent="center" display="flex">
         <Stack spacing={2}>
           <FirstView />

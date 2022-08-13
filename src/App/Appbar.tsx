@@ -11,10 +11,20 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import MenuItem from '@mui/material/MenuItem'
 import Menu, { MenuProps } from '@mui/material/Menu'
-import { alpha, Button, Divider, styled } from '@mui/material'
+import {
+  alpha,
+  Backdrop,
+  Button,
+  CircularProgress,
+  Divider,
+  styled,
+} from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { navigate } from '@reach/router'
+import { DatasetView } from './DatasetView'
+import { About } from './About'
+import { Feedback } from './Feedback'
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -60,17 +70,29 @@ const StyledMenu = styled((props: MenuProps) => (
 }))
 
 export function MenuAppBar() {
+  // MENU 1
   const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null)
   const open1 = Boolean(anchorEl1)
   const handleClick1 = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl1(event.currentTarget)
   const handleClose1 = () => setAnchorEl1(null)
 
+  // MENU 2
   const [anchorEl2, setAnchorEl2] = React.useState<null | HTMLElement>(null)
   const open2 = Boolean(anchorEl2)
   const handleClick2 = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl2(event.currentTarget)
   const handleClose2 = () => setAnchorEl2(null)
+
+  // DATASET BACKDROP
+  const [openDataset, setOpenDataset] = React.useState(false)
+  const [content, setContent] = React.useState('')
+  const handleDatasetClick = () => {
+    setOpenDataset(!openDataset)
+  }
+  const handleDatasetClose = () => {
+    setOpenDataset(false)
+  }
 
   return (
     <AppBar
@@ -106,7 +128,7 @@ export function MenuAppBar() {
           <MenuItem
             onClick={() => {
               handleClose1()
-              navigate('randomizer')
+              navigate('/randomizer')
             }}
             disableRipple
           >
@@ -115,6 +137,8 @@ export function MenuAppBar() {
           <MenuItem
             onClick={() => {
               handleClose1()
+              handleDatasetClick()
+              setContent('Dataset')
             }}
             disableRipple
           >
@@ -143,7 +167,14 @@ export function MenuAppBar() {
           open={open2}
           onClose={handleClose2}
         >
-          <MenuItem onClick={handleClose2} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleClose2()
+              handleDatasetClick()
+              setContent('About')
+            }}
+            disableRipple
+          >
             About
           </MenuItem>
           <MenuItem onClick={handleClose2} disableRipple>
@@ -152,7 +183,14 @@ export function MenuAppBar() {
           <MenuItem onClick={handleClose2} disableRipple>
             Strategy
           </MenuItem>
-          <MenuItem onClick={handleClose2} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleClose2()
+              handleDatasetClick()
+              setContent('Feedback')
+            }}
+            disableRipple
+          >
             Feedback
           </MenuItem>
         </StyledMenu>
@@ -169,6 +207,19 @@ export function MenuAppBar() {
           Run
         </Button>
       </Toolbar>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openDataset}
+        onClick={handleDatasetClose}
+      >
+        {content === 'Dataset' ? (
+          <DatasetView />
+        ) : content === 'About' ? (
+          <About />
+        ) : (
+          <Feedback />
+        )}
+      </Backdrop>
     </AppBar>
   )
 }

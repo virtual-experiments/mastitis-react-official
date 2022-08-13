@@ -43,12 +43,6 @@ export class Experiment {
 
   updateCow(cow: Cow): void {
     let index = this.cows.findIndex((c: Cow) => c.getCowID() === cow.getCowID())
-
-    console.log(
-      'Comparing ' + this.cows[0].getCowID() + ' and ' + cow.getCowID()
-    )
-    console.log('Index: ' + index)
-
     let newCows = [...this.cows]
     newCows[index] = cow
 
