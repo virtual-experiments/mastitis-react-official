@@ -118,7 +118,7 @@ export const RandomizerPage: React.FC = () => {
     for (let i = 1; i <= max; i++) {
       arr.push(i)
     }
-    console.log(arr)
+
     return arr.map((option, index) => (
       <MenuItem value={option}>{option}</MenuItem>
     ))

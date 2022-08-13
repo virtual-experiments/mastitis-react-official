@@ -25,6 +25,11 @@ import { navigate } from '@reach/router'
 import { DatasetView } from './DatasetView'
 import { About } from './About'
 import { Feedback } from './Feedback'
+import { experimentState, farmState } from '../dataStructure'
+import { useRecoilState } from 'recoil'
+import { ExperimentDialog } from './ExperimentDialog'
+import { Help } from './Help'
+import { Strategy } from './Strategy'
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -70,6 +75,9 @@ const StyledMenu = styled((props: MenuProps) => (
 }))
 
 export function MenuAppBar() {
+  let [experiment, setExperiment] = useRecoilState(experimentState)
+  let [farms, setFarms] = useRecoilState(farmState)
+
   // MENU 1
   const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null)
   const open1 = Boolean(anchorEl1)
@@ -92,6 +100,16 @@ export function MenuAppBar() {
   }
   const handleDatasetClose = () => {
     setOpenDataset(false)
+  }
+
+  // RUN
+  const runExperiment = () => {
+    let newExperiment = experiment.copy()
+    let newFarms = newExperiment.run(farms)
+    setExperiment(newExperiment)
+    setFarms(newFarms)
+    handleDatasetClick()
+    setContent('Experiment')
   }
 
   return (
@@ -177,10 +195,24 @@ export function MenuAppBar() {
           >
             About
           </MenuItem>
-          <MenuItem onClick={handleClose2} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleClose2()
+              handleDatasetClick()
+              setContent('Help')
+            }}
+            disableRipple
+          >
             Applet Help
           </MenuItem>
-          <MenuItem onClick={handleClose2} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleClose2()
+              handleDatasetClick()
+              setContent('Strategy')
+            }}
+            disableRipple
+          >
             Strategy
           </MenuItem>
           <MenuItem
@@ -200,9 +232,7 @@ export function MenuAppBar() {
           variant="outlined"
           disableElevation
           size="large"
-          onClick={() => {
-            console.log('Clicked')
-          }}
+          onClick={runExperiment}
         >
           Run
         </Button>
@@ -216,8 +246,14 @@ export function MenuAppBar() {
           <DatasetView />
         ) : content === 'About' ? (
           <About />
-        ) : (
+        ) : content === 'Feedback' ? (
           <Feedback />
+        ) : content === 'Experiment' ? (
+          <ExperimentDialog />
+        ) : content === 'Help' ? (
+          <Help />
+        ) : (
+          <Strategy />
         )}
       </Backdrop>
     </AppBar>

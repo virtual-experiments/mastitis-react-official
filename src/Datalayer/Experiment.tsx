@@ -2,7 +2,10 @@
  * The class who represents the Experiment with all its properties.
  */
 
+import { useRecoilState } from 'recoil'
+import { farmState } from '../dataStructure'
 import { Cow } from './Cow'
+import { Farm } from './Farm'
 
 //singleton
 export class Experiment {
@@ -60,20 +63,28 @@ export class Experiment {
     })
   } //end removeCow
 
+  private findFarmIndexOfCow(farms: Farm[], cowID: string): number {
+    for (let i = 0; i < farms.length; i++) {
+      if (farms[i].cows.some((c: Cow) => c.getCowID() == cowID)) return i
+    }
+    return -1
+  }
+
   /**
    * This method creates for every cow in the experiment, a final milk production
    * in function of his properties. (For the rule see code)
    * Every Participating Cow has to have a Vaccin or NO vaccin, a high or a low Challenge before this can take place.
    * So an ERRORdialog is showed when it can't proceed.
    */
-  run(): void {
+  run(farms: Farm[]): Farm[] {
+    let newFarms = [...farms]
     //const options:any = { "OK" };
     //TODO: options dialog
     // geen parenframe, tekst in venster, titel venster, ..., soortMSG, standaard icoon, titels van keuzes, geselecteerde keuze
-    if (!this.everybodyAssigned())
+    if (this.everybodyAssigned())
       //JOptionPane.showOptionDialog(null, "To be able to run the experiment, every cow that's in the experiment must be assigned a low or a high challenge, a vaccin or no vaccin. ", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE,null, options, options[0]);
       for (var i = 0; i < this.cows.length; i++) {
-        var koe = this.cows[i]
+        var koe = this.cows[i].copy()
         //      System.out.println(koe.random);
         //      koe.random=0;
         if (koe.isHeifer()) {
@@ -108,7 +119,17 @@ export class Experiment {
             )
           }
         } //end multi
+        let newCows = [...this.cows]
+        newCows[i] = koe
+        this.cows = newCows
+
+        var farmIndex = this.findFarmIndexOfCow(farms, koe.getCowID())
+        let farm = newFarms[farmIndex].copy()
+        farm.updateCow(koe)
+        newFarms[farmIndex] = farm
       } //end for
+
+    return newFarms
   } //end run
 
   /**

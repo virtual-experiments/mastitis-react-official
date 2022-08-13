@@ -18,63 +18,7 @@ import Stack from '@mui/material/Stack'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import { Container } from '@mui/system'
-import Button from '@mui/material/Button'
 import { CustomButton } from './CustomButton'
-
-//const logo = require('images/farm1342.jpg')
-
-interface Props {
-  todo?: string
-}
-
-interface State {
-  onEdit: boolean
-}
-
-// const Button = styled.button`
-//   background-color: #6e6e6e; //gray;
-//   color: white;
-//   font-size: 10px;
-//   padding: 10px 10px;
-//   margin: 5px 0px;
-//   width: 250px;
-//   cursor: pointer;
-
-//   :hover {
-//     background-color: #a3a3a3;
-//   }
-
-//   :disabled {
-//     background-color: #a3a3a3;
-//     cursor: not-allowed;
-//   }
-// `
-
-// const buttonStyle = {
-//     border: "none";
-//     color: "white";
-//     padding: "15px 32px";
-//     text-align: center;
-//     text-decoration: none;
-//     display: inline-block;
-//     font-size: 16px;
-//     margin: 4px 2px;
-//     cursor: pointer;
-// }
-
-const FirstBox = styled.div`
-  flex: 2;
-  margin: auto;
-  text-align: center;
-`
-
-const MiddleBox = styled.div`
-  flex: 0.5;
-`
-
-const SecondBox = styled.div`
-  flex: 3;
-`
 
 export interface FarmButtonPageProps {
   farmId?: string

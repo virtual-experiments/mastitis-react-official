@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { Layout } from './style'
 import { Farm } from '../Datalayer/Farm'
 import { Cow } from '../Datalayer/Cow'
+import Box from '@mui/material/Box'
 
 interface FarmProps {
   farmId?: string
@@ -21,15 +22,15 @@ interface State {
   onEdit: boolean
 }
 
-// const Centered = styled.div`
-//   text-align: center;
-//   border-bottom: 6px solid black;
-
-//   table {
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-// `
+const Centered = styled.div`
+  table {
+    margin-left: auto;
+    margin-right: auto;
+    // borderspacing: '4px 4px';
+  }
+`
+let borderType = '1px solid'
+let padding = 10
 
 export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
@@ -37,9 +38,9 @@ export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
   let selectedFarm = farms.find((f: Farm) =>
     farm.farmId?.includes(f.getFarmID())
   )
+
   return (
-    // <Centered>
-    <>
+    <Centered>
       <div>Farm number: {selectedFarm?.getFarmID()}</div>
       <div>BNO: {selectedFarm?.getBNO()}</div>
       <div>AAmilk?: {selectedFarm?.getAAmilk() ? 'True' : 'False'}</div>
@@ -47,27 +48,53 @@ export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
         The number of cows participating in the experiment:{' '}
         {selectedFarm?.numberOfParticipatingCows()}
       </div>
-      <table>
+      <Box sx={{ height: 10 }}> </Box>
+      <table style={{ borderSpacing: '0px 0px' }}>
         <tbody>
           <tr>
-            <th></th>
-            <th>Number of Vaccinated Cows:</th>
-            <th>Number of NOT Vaccinated Cows:</th>
+            <th
+              style={{ borderBottom: borderType, borderRight: borderType }}
+            ></th>
+            {/* <th style={{'border-right': '2px dashed'  'border-bottom': '2px dashed'}}> */}
+            <th
+              style={{
+                borderBottom: borderType,
+                padding: padding,
+              }}
+            >
+              Number of Vaccinated Cows:
+            </th>
+            <th
+              style={{
+                borderBottom: borderType,
+                padding: padding,
+              }}
+            >
+              Number of NOT Vaccinated Cows:
+            </th>
           </tr>
           <tr>
-            <td>Number of High Challenges:</td>
+            <th
+              style={{
+                borderRight: borderType,
+                padding: padding,
+              }}
+            >
+              Number of High Challenges:
+            </th>
             <td>{selectedFarm!.numberOfVacinatedHighChallengeCows()}</td>
             <td>{selectedFarm!.numberOfNOTVacinatedHighChallengeCows()}</td>
           </tr>
           <tr>
-            <td>Number of Low Challenges:</td>
+            <th style={{ borderRight: borderType, padding: padding }}>
+              Number of Low Challenges:
+            </th>
             <td>{selectedFarm!.numberOfVacinatedLowChallengeCows()}</td>
             <td>{selectedFarm!.numberOfNOTVacinatedLowChallengeCows()}</td>
           </tr>
         </tbody>
       </table>
-      {/* </Centered> */}
-    </>
+    </Centered>
   )
 }
 
@@ -130,30 +157,51 @@ export const RegionInfo: React.FC = () => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   let experiment = useRecoilValue(experimentState)
   return (
-    <>
+    <Centered>
       <div>
         The number of cows in the experiment:{' '}
         {experiment.numberOfParticipatingCows()}
       </div>
-      <table>
+      <Box sx={{ height: 10 }}> </Box>
+      <table style={{ borderSpacing: '0px 0px' }}>
         <tbody>
           <tr>
-            <th></th>
-            <th>Number of Vaccinated Cows:</th>
-            <th>Number of NOT Vaccinated Cows:</th>
+            <th
+              style={{ borderBottom: borderType, borderRight: borderType }}
+            ></th>
+            <th
+              style={{
+                borderBottom: borderType,
+                padding: padding,
+              }}
+            >
+              Number of Vaccinated Cows:
+            </th>
+            <th
+              style={{
+                borderBottom: borderType,
+                padding: padding,
+              }}
+            >
+              Number of NOT Vaccinated Cows:
+            </th>
           </tr>
           <tr>
-            <td>Number of High Challenges:</td>
+            <td style={{ borderRight: borderType, padding: padding }}>
+              Number of High Challenges:
+            </td>
             <td>{experiment.numberOfVacinatedHighChallengeCows()}</td>
             <td>{experiment.numberOfNOTVacinatedHighChallengeCows()}</td>
           </tr>
           <tr>
-            <td>Number of Low Challenges:</td>
+            <td style={{ borderRight: borderType, padding: padding }}>
+              Number of Low Challenges:
+            </td>
             <td>{experiment.numberOfVacinatedLowChallengeCows()}</td>
             <td>{experiment.numberOfNOTVacinatedLowChallengeCows()}</td>
           </tr>
         </tbody>
       </table>
-    </>
+    </Centered>
   )
 }

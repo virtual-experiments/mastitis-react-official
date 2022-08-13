@@ -193,8 +193,6 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     let newCows = [...cows]
     let newCow = selectedCow.copy()
     let exp = experiment.copy()
-    console.log('Exp before: ')
-    console.log(experiment)
     // TODO: add warning for vaccine
     //toon waarschuwing als het een niet manueel toegekende vaccin had
     // Object[] options = { "YES", "NO" }; // geen parenframe, tekst in venster, titel venster,...,soortMSG,standaard icoon,titels van keuzes, geselecteerde keuze
@@ -209,9 +207,6 @@ export const CowButtonPage: React.FC<ButtonPageProps> = (props) => {
     newFarms[farmIndex] = f
     setFarms(newFarms)
     setExperiment(exp)
-
-    console.log('Exp after: ')
-    console.log(exp)
   }
   const GiveNoVaccineButton = () => {
     //toon waarschuwing als het een niet manueel toegekende vaccin had
