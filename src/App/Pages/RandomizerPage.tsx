@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 // import './styles.scss'
 
 import {
@@ -9,7 +9,6 @@ import {
 } from '../../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
-import { Cow } from '../../Datalayer/Cow'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -27,14 +26,6 @@ import { navigate } from '@reach/router'
 
 //const logo = require('images/farm1342.jpg')
 
-interface Props {
-  todo?: string
-}
-
-interface State {
-  onEdit: boolean
-}
-
 export interface FarmButtonPageProps {
   farmId?: string
 }
@@ -47,50 +38,6 @@ const Item = styled(Box)(({ theme }) => ({
   // lineHeight: '60px',
   // padding: 20,
 }))
-
-export const RandomizerTopPage: React.FC = () => {
-  let randomization = useRecoilValue(randomizationsState)[0]
-  let str = '' //hier ook terug wegdoenzonder Jpanel
-  str +=
-    "You've selected " +
-    randomization.size().toString() +
-    ' ' +
-    randomization.mode()
-
-  let data = randomization.getData()
-  let res: string[] = []
-  if (data.length != 0) {
-    for (var koeOrfarm of data) {
-      let tempStr = ''
-      //welke mode
-      if (koeOrfarm instanceof Cow) {
-        tempStr += koeOrfarm.toString()
-        if (
-          koeOrfarm.getsVaccin() ||
-          koeOrfarm.getsNOVaccin() ||
-          koeOrfarm.hasHighChallenge() ||
-          koeOrfarm.hasLowChallenge()
-        ) {
-          tempStr += ' !!! WARNING !! allready assigned some properties'
-        }
-      } else {
-        //welke mode
-        tempStr += koeOrfarm.toString()
-        //hier moeten dus eventueel de andere details ook afgeprint worden
-      }
-      //hier moeten dus eventueel de andere details ook afgeprint worden
-      res.push(tempStr)
-    }
-  }
-  return (
-    <>
-      <div>{str}</div>
-      {res.map((val: string) => {
-        return <div>{val}</div>
-      })}
-    </>
-  )
-}
 
 export const RandomizerPage: React.FC = () => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)

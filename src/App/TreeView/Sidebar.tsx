@@ -1,5 +1,5 @@
 import React from 'react'
-import { farmState, randomizationsState, Routes } from '../../dataStructure'
+import { farmState, randomizationsState } from '../../dataStructure'
 import Navigation, { NavItemProps } from './Navigationbar'
 import { useRecoilValue } from 'recoil'
 import { Cow } from '../../Datalayer/Cow'

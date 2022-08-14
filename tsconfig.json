@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "types": [
-      "cypress",
-      "@testing-library/cypress"
-    ],
     "target": "ES2020",
     "lib": [
       "dom",
@@ -25,7 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "cypress"
+    "src"
   ]
 }

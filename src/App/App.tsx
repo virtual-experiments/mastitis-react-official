@@ -1,9 +1,9 @@
 import type { RouteComponentProps } from '@reach/router'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import Sidebar from './TreeView/Sidebar'
-import { CowInfo, FarmInfo, RegionInfo } from './Pages/ObjectInfo'
-import ButtonPage from './Pages/ButtonPage'
+import { RegionInfo } from './Pages/RegionInfo'
+import FarmButtonPage from './Pages/FarmButtonPage'
 import { AppProps } from '..'
 import { CowButtonPage } from './Pages/CowButtonPage'
 import { Stack } from '@mui/system'
@@ -15,11 +15,10 @@ import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
 import { styled } from '@mui/material/styles'
 import { MenuAppBar } from './Appbar/Appbar'
-import { RandomizerTopPage, RandomizerPage } from './Pages/RandomizerPage'
-
-interface Props {
-  path: string
-}
+import { RandomizerPage } from './Pages/RandomizerPage'
+import { RandomizerInfo } from './Pages/RandomizerInfo'
+import { FarmInfo } from './Pages/FarmInfo'
+import { CowInfo } from './Pages/CowInfo'
 
 const elev = 0
 const Item = styled(Paper)(({ theme }) => ({
@@ -28,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: 20,
 }))
 
-const App: React.FC<AppProps & RouteComponentProps> = (props) => {
+export const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   // const appState = useRecoilValue<AppState>(recoilState)
 
   // // if appState has changes, save it LocalStorage.
@@ -43,7 +42,7 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
     if (props.path === '/') {
       return <RegionInfo />
     } else if (props.path === '/randomizer') {
-      return <RandomizerTopPage />
+      return <RandomizerInfo />
     } else if (props.cowId) {
       return <CowInfo farmId={props.farmId} cowId={props.cowId} />
     } else {
@@ -59,7 +58,7 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
     } else if (props.cowId) {
       return <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
     } else {
-      return <ButtonPage farmId={props.farmId} />
+      return <FarmButtonPage farmId={props.farmId} />
     }
   }
 
@@ -95,5 +94,3 @@ const App: React.FC<AppProps & RouteComponentProps> = (props) => {
     </Box>
   )
 }
-
-export default App

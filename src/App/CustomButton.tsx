@@ -1,16 +1,5 @@
 import React from 'react'
-import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles'
 import Button from '@mui/material/Button'
-
-// const CustomButton = styled(Button)(({ theme }) => ({
-//   textAlign: 'center',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   // lineHeight: '60px',
-//   // padding: 20,
-// }))
 
 export type ButtonProps = {
   disabled: boolean

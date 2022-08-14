@@ -26,7 +26,7 @@ const Item = styled(Box)(({ theme }) => ({
   // padding: 20,
 }))
 
-const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
+const FarmButtonPage: React.FC<FarmButtonPageProps> = (props) => {
   //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   const path = 'images/'
 
@@ -310,4 +310,4 @@ const ButtonPage: React.FC<FarmButtonPageProps> = (props) => {
   )
 }
 
-export default ButtonPage
+export default FarmButtonPage

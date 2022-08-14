@@ -2,8 +2,9 @@ import { Router } from '@reach/router'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RecoilRoot } from 'recoil'
+import { App } from './App/App'
 
-import App from './App'
+// import App from './App/App'
 import ErrorBoundary from './ErrorBoundary'
 import { NotFound } from './NotFound'
 
@@ -19,7 +20,6 @@ root.render(
     <RecoilRoot>
       <Router>
         <App path="/" />
-        {/* <App path="/region" /> */}
         <App path="/randomizer" />
         <App path="/:farmId" />
         <App path="/:farmId/:cowId" />

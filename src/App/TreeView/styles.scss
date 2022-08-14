@@ -25,7 +25,7 @@
 		}
 
 		&:hover {
-		  @apply bg-gray-100 text-gray-800 border-pink-500;
+		  @apply bg-gray-100 text-gray-800 border-blue-500;
 		}
 
 		.side-navigation-panel-select-option-wrap {
@@ -47,7 +47,7 @@
 	  }
 
 	  .side-navigation-panel-select-option-selected {
-		@apply text-gray-800 bg-gray-100 border-pink-500;
+		@apply text-gray-800 bg-gray-100 border-blue-500;
 	  }
 	}
 
@@ -58,7 +58,7 @@
 		  @apply flex items-center justify-between px-7 py-2 border-l-2 cursor-pointer text-gray-700;
 
 		  &:hover {
-			@apply bg-gray-100 text-gray-800 border-pink-500;
+			@apply bg-gray-100 text-gray-800 border-blue-500;
 		  }
 
 		  .side-navigation-panel-select-inner-option-wrap {
@@ -71,7 +71,7 @@
 		}
 
 		.side-navigation-panel-select-inner-option-selected {
-			@apply text-gray-800 bg-gray-100 border-pink-500;
+			@apply text-gray-800 bg-gray-100 border-blue-500;
 		}
 	  }
 	}

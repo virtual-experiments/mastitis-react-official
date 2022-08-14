@@ -5,45 +5,6 @@ import { Experiment } from './Datalayer/Experiment';
 import { Farm } from './Datalayer/Farm';
 import { Randomization } from './Datalayer/Randomization';
 
-export type Routes = '/' | '/page-1' | '/page-2' | '/page-3'
-
-export interface AppState {
-  farms: Farm[],
-  selection: Randomization,
-  oldRandomizations: Randomization[],
-  randoms: number[],
-}
-
-export enum LocalStorageKey {
-  APP_STATE = 'APP_STATE',
-}
-
-// function LoadAppStateFromLocalStorage(): AppState {
-//   // const stringifiedJSON: string | null = window.localStorage.getItem(
-//   //   LocalStorageKey.APP_STATE
-//   // )
-//   // if (typeof stringifiedJSON === 'string') {
-//   //   const Loaded: AppState = JSON.parse(stringifiedJSON)
-//   //   return Loaded
-//   // }
-
-//   //      this.loadData();
-
-
-//   const BlankAppState: AppState = {
-//     farms: [],
-//     selection: new Randomization(),
-//     oldRandomizations: [],
-//     randoms: []
-//   }
-
-//   return BlankAppState
-// }
-
-// export const recoilState: RecoilState<AppState> = atom({
-//   default: LoadAppStateFromLocalStorage(),
-//   key: 'initialAppState',
-// })
 const loadData = (): Farm[] => {
   let newFState:Farm[] = []
 
@@ -257,48 +218,3 @@ export const randomizationsState: RecoilState<Randomization[]> = atom({
   default: [new Randomization],
   key: 'randomizationsState',
 })
-export const selectionState: RecoilState<Randomization> = selector({
-  key: 'selectionState',
-  get: ({get}) => get(randomizationsState)[0],
-  set: ({set}, dum) => set(randomizationsState, prevState => [new Randomization, ...prevState])
-})
-
-// export const farmPicker = selectorFamily
-// ({
-//   key: 'farmPicker',
-//   get: (farmId:number) => ({get}) => {
-//     return get(farmState).find((f:Farm) => f.ID === farmId)
-//   },
-//   set: (farmId:number) => ({set}, newFarm) => {
-//     set(farmState, prevState => {
-//       let i = prevState.findIndex((f:Farm) => f.ID === farmId);
-//       if (i == -1) {
-//         prevState = [...prevState, newFarm as Farm]
-//       } else {
-//         prevState[i] = newFarm as Farm
-//       }
-
-//       return prevState
-//     })
-//   }
-// })
-
-// export const addCow = selectorFamily
-// ({
-//   key: 'addCow',
-//   get: (farmId:number) => ({get}) => {
-//     return get(farmState).find((f:Farm) => f.ID === farmId)
-//   },
-//   set: (farmId:number) => ({set}, newFarm) => {
-//     set(farmState, prevState => {
-//       let i = prevState.findIndex((f:Farm) => f.ID === farmId);
-//       if (i == -1) {
-//         prevState = [...prevState, newFarm as Farm]
-//       } else {
-//         prevState[i] = newFarm as Farm
-//       }
-
-//       return prevState
-//     })
-//   }
-// })
