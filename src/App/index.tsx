@@ -1,21 +1,11 @@
 import type { RouteComponentProps } from '@reach/router'
 import React, { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
 
-import type { AppState, Routes } from '../dataStructure'
-import { LocalStorageKey } from '../dataStructure'
-
-import { Layout } from './style'
-import Sidebar from './Sidebar'
-import { CowInfo, FarmInfo, RegionInfo } from './ObjectInfo'
-import ButtonPage from './ButtonPage'
+import Sidebar from './TreeView/Sidebar'
+import { CowInfo, FarmInfo, RegionInfo } from './Pages/ObjectInfo'
+import ButtonPage from './Pages/ButtonPage'
 import { AppProps } from '..'
-// import styled from 'styled-components'
-import { CowButtonPage } from './CowButtonPage'
-import { MenuAppBar } from './Appbar'
-
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import { CowButtonPage } from './Pages/CowButtonPage'
 import { Stack } from '@mui/system'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
@@ -23,8 +13,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Toolbar from '@mui/material/Toolbar'
 import Divider from '@mui/material/Divider'
 import Paper from '@mui/material/Paper'
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
-import { RandomizerPage, RandomizerTopPage } from './RandomizerPage'
+import { styled } from '@mui/material/styles'
+import { MenuAppBar } from './Appbar/Appbar'
+import { RandomizerTopPage, RandomizerPage } from './Pages/RandomizerPage'
 
 interface Props {
   path: string

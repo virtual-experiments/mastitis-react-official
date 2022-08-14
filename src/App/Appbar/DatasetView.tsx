@@ -8,9 +8,9 @@ import TableRow from '@mui/material/TableRow'
 import type { RouteComponentProps } from '@reach/router'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Cow } from '../Datalayer/Cow'
-import { Farm } from '../Datalayer/Farm'
-import { farmState } from '../dataStructure'
+import { Cow } from '../../Datalayer/Cow'
+import { Farm } from '../../Datalayer/Farm'
+import { farmState } from '../../dataStructure'
 
 function createData(cow: Cow, farm: Farm) {
   return { cow, farm }

@@ -1,6 +1,3 @@
-import { min } from 'cypress/types/lodash'
-import { useRecoilState } from 'recoil'
-import { experimentState } from '../dataStructure'
 import { Challenge } from './Challenge'
 import { Experiment } from './Experiment'
 import { Farm } from './Farm'

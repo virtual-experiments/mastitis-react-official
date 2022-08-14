@@ -1,31 +1,17 @@
 import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import Switch from '@mui/material/Switch'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
 import MenuItem from '@mui/material/MenuItem'
 import Menu, { MenuProps } from '@mui/material/Menu'
-import {
-  alpha,
-  Backdrop,
-  Button,
-  CircularProgress,
-  Divider,
-  styled,
-} from '@mui/material'
+import { alpha, Backdrop, Button, styled } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { navigate } from '@reach/router'
 import { DatasetView } from './DatasetView'
 import { About } from './About'
 import { Feedback } from './Feedback'
-import { experimentState, farmState } from '../dataStructure'
+import { experimentState, farmState } from '../../dataStructure'
 import { useRecoilState } from 'recoil'
 import { ExperimentDialog } from './ExperimentDialog'
 import { Help } from './Help'

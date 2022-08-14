@@ -1,24 +1,17 @@
-import React, { useState, createRef, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import './Navigationbar/styles.scss'
+import { useRecoilState } from 'recoil'
 
 import {
-  AppState,
   experimentState,
   farmState,
   randomizationsState,
-  selectionState,
-} from '../dataStructure'
+} from '../../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
-import { AppProps } from '..'
-import { Cow } from '../Datalayer/Cow'
-import { Farm } from '../Datalayer/Farm'
+import { Farm } from '../../Datalayer/Farm'
 import Stack from '@mui/material/Stack'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import { Container } from '@mui/system'
-import { CustomButton } from './CustomButton'
+import { CustomButton } from '../CustomButton'
 
 export interface FarmButtonPageProps {
   farmId?: string

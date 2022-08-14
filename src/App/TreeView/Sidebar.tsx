@@ -1,23 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import styled, { createGlobalStyle, css } from 'styled-components'
-import { Link } from '@reach/router'
-
-import { farmState, randomizationsState, Routes } from '../dataStructure'
-import Navigation, { NavItemProps } from './Navigationbar/Navigationbar'
+import React from 'react'
+import { farmState, randomizationsState, Routes } from '../../dataStructure'
+import Navigation, { NavItemProps } from './Navigationbar'
 import { useRecoilValue } from 'recoil'
-import { Cow } from '../Datalayer/Cow'
-import { Farm } from '../Datalayer/Farm'
-import { AppProps } from '..'
-
-import Icon from 'awesome-react-icons'
-
-interface Props {
-  path: string
-}
-
-interface StyleProp {
-  active: boolean
-}
+import { Cow } from '../../Datalayer/Cow'
+import { Farm } from '../../Datalayer/Farm'
+import { AppProps } from '../..'
 
 const Sidebar: React.FC<AppProps> = (props) => {
   function getNavigationList(): NavItemProps[] {

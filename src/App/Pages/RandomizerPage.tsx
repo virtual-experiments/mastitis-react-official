@@ -1,24 +1,18 @@
-import React, { useState, createRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 // import './styles.scss'
 
 import {
-  AppState,
   experimentState,
   farmState,
   randomizationsState,
-  selectionState,
-} from '../dataStructure'
+} from '../../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
-import { Cow } from '../Datalayer/Cow'
-import { Farm } from '../Datalayer/Farm'
+import { Cow } from '../../Datalayer/Cow'
 import Stack from '@mui/material/Stack'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import { Container } from '@mui/system'
 import Button from '@mui/material/Button'
-import { CustomButton } from './CustomButton'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -28,7 +22,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import InputLabel from '@mui/material/InputLabel'
 import { Grid, TextField } from '@mui/material'
-import { Randomization } from '../Datalayer/Randomization'
+import { Randomization } from '../../Datalayer/Randomization'
 import { navigate } from '@reach/router'
 
 //const logo = require('images/farm1342.jpg')

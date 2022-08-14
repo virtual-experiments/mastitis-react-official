@@ -1,14 +1,12 @@
-import React, { useState, createRef, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import React from 'react'
+import { useRecoilValue } from 'recoil'
 
-import { AppState, experimentState, farmState } from '../dataStructure'
-// import { recoilState } from '../dataStructure'
+import { experimentState, farmState } from '../../dataStructure'
+
 import styled from 'styled-components'
-
-import { Layout } from './style'
-import { Farm } from '../Datalayer/Farm'
-import { Cow } from '../Datalayer/Cow'
+import { Cow } from '../../Datalayer/Cow'
 import Box from '@mui/material/Box'
+import { Farm } from '../../Datalayer/Farm'
 
 interface FarmProps {
   farmId?: string

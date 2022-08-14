@@ -1,4 +1,3 @@
-import { getEnvironmentData } from 'worker_threads'
 import { Cow } from './Cow'
 import { Experiment } from './Experiment'
 import { Farm } from './Farm'

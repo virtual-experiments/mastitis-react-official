@@ -1,8 +1,6 @@
-import { Challenge } from './Challenge'
 import { Cow } from './Cow'
 import { Experiment } from './Experiment'
 import { Randomization } from './Randomization'
-import { Vaccin } from './Vaccin'
 
 /**
  * The class who represents the properties of the farm.

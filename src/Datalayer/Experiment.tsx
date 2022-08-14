@@ -1,9 +1,6 @@
 /**
  * The class who represents the Experiment with all its properties.
  */
-
-import { useRecoilState } from 'recoil'
-import { farmState } from '../dataStructure'
 import { Cow } from './Cow'
 import { Farm } from './Farm'
 

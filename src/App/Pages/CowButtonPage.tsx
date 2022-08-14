@@ -1,20 +1,15 @@
-import React, { useState, createRef, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import {
-  AppState,
   experimentState,
   farmState,
   randomizationsState,
-  selectionState,
-} from '../dataStructure'
+} from '../../dataStructure'
 // import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
-import { AppProps } from '..'
-import { Cow } from '../Datalayer/Cow'
-import { Farm } from '../Datalayer/Farm'
-import { Challenge } from '../Datalayer/Challenge'
-import { CustomButton } from './CustomButton'
+import { Cow } from '../../Datalayer/Cow'
+import { Farm } from '../../Datalayer/Farm'
+import { CustomButton } from '../CustomButton'
 import Stack from '@mui/material/Stack'
 
 //const logo = require('images/farm1342.jpg')

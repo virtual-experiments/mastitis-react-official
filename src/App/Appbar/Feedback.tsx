@@ -5,12 +5,11 @@ import { List, ListItem, Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/system/Box'
 import { useRecoilValue } from 'recoil'
-import { Randomization } from '../Datalayer/Randomization'
 import {
   experimentState,
   farmState,
   randomizationsState,
-} from '../dataStructure'
+} from '../../dataStructure'
 
 //3.0 met extra warning, foutje eruit, extra scrollbars, relatieve help(zie comments.doc)
 export const Feedback = () => {
