@@ -5,7 +5,11 @@ import { Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/system/Box'
 
-//3.0 met extra warning, foutje eruit, extra scrollbars, relatieve help(zie comments.doc)
+/**
+ * Not implemented yet
+ *
+ * @returns React component
+ */
 export const Strategy = () => {
   return (
     <Paper sx={{ p: 3, width: '80%' }}>

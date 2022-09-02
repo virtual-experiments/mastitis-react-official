@@ -1,11 +1,9 @@
 import { useRecoilState } from 'recoil'
-
 import {
   experimentState,
   farmState,
   randomizationsState,
 } from '../../dataStructure'
-// import { recoilState } from '../dataStructure'
 import styled from 'styled-components'
 import { Farm } from '../../Datalayer/Farm'
 import Stack from '@mui/material/Stack'
@@ -14,7 +12,7 @@ import { Container } from '@mui/system'
 import { CustomButton } from '../CustomButton'
 
 export interface FarmButtonPageProps {
-  farmId?: string
+  farmId: string
 }
 
 const Item = styled(Box)(({ theme }) => ({
@@ -26,8 +24,11 @@ const Item = styled(Box)(({ theme }) => ({
   // padding: 20,
 }))
 
+/**
+ * A button interface for controlling the state of the farm.
+ *
+ */
 const FarmButtonPage: React.FC<FarmButtonPageProps> = (props) => {
-  //   const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   const path = 'images/'
 
   const availabilities = {
@@ -184,129 +185,65 @@ const FarmButtonPage: React.FC<FarmButtonPageProps> = (props) => {
   }
 
   return (
-    <>
-      <Stack spacing={2} direction="row">
-        <Item sx={{ flexGrow: 1 }}>
-          <Container sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Stack
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-              sx={{ display: 'flex' }}
+    <Stack spacing={2} direction="row">
+      <Item sx={{ flexGrow: 1 }}>
+        <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            spacing={2}
+            sx={{ display: 'flex' }}
+          >
+            <CustomButton onClick={AddButton} disabled={!availabilities.Add}>
+              Add all cows to experiment
+            </CustomButton>
+            <CustomButton
+              onClick={RemoveButton}
+              disabled={!availabilities.Remove}
             >
-              <CustomButton onClick={AddButton} disabled={!availabilities.Add}>
-                Add all cows to experiment
-              </CustomButton>
-              <CustomButton
-                onClick={RemoveButton}
-                disabled={!availabilities.Remove}
-              >
-                Remove all cows out of experiment
-              </CustomButton>
-              <CustomButton
-                onClick={GiveVaccineButton}
-                disabled={!availabilities.giveVaccine}
-              >
-                Give the vaccine
-              </CustomButton>
-              <CustomButton
-                onClick={GiveNoVaccineButton}
-                disabled={!availabilities.giveNoVaccine}
-              >
-                Give no vaccine
-              </CustomButton>
-              <CustomButton
-                onClick={ChallengeHighButton}
-                disabled={!availabilities.ChallengeHigh}
-              >
-                Set Challenge High
-              </CustomButton>
-              <CustomButton
-                onClick={ChallengeLowButton}
-                disabled={!availabilities.ChallengeLow}
-              >
-                Set Challenge Low
-              </CustomButton>
-              <CustomButton
-                onClick={RandomizerButton}
-                disabled={!availabilities.Randomizer}
-              >
-                Put in randomizer
-              </CustomButton>
-            </Stack>
-          </Container>
-        </Item>
-
-        {/* <FirstBox>
-        <div>
-          <Button onClick={AddButton} disabled={!availabilities.Add}>
-            Add all cows to experiment
-          </Button>
-        </div>
-        <div>
-          <Button onClick={RemoveButton} disabled={!availabilities.Remove}>
-            Remove all cows out of experiment
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={GiveVaccineButton}
-            disabled={!availabilities.giveVaccine}
-          >
-            Give the vaccine
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={GiveNoVaccineButton}
-            disabled={!availabilities.giveNoVaccine}
-          >
-            Give no vaccine
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={ChallengeHighButton}
-            disabled={!availabilities.ChallengeHigh}
-          >
-            Set Challenge High
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={ChallengeLowButton}
-            disabled={!availabilities.ChallengeLow}
-          >
-            Set Challenge Low
-          </Button>
-        </div>
-        <div>
-          <Button
-            onClick={RandomizerButton}
-            disabled={!availabilities.Randomizer}
-          >
-            Put in randomizer
-          </Button>
-        </div>
-      </FirstBox> */}
-        <Item sx={{ flexGrow: 4 }}>
-          {props.farmId ? (
-            <img src={path + 'farm' + props.farmId + '.jpg'} />
-          ) : (
-            <img src={path + 'farm1342.jpg'} />
-          )}
-        </Item>
-
-        {/* <MiddleBox></MiddleBox>
-      <SecondBox>
+              Remove all cows out of experiment
+            </CustomButton>
+            <CustomButton
+              onClick={GiveVaccineButton}
+              disabled={!availabilities.giveVaccine}
+            >
+              Give the vaccine
+            </CustomButton>
+            <CustomButton
+              onClick={GiveNoVaccineButton}
+              disabled={!availabilities.giveNoVaccine}
+            >
+              Give no vaccine
+            </CustomButton>
+            <CustomButton
+              onClick={ChallengeHighButton}
+              disabled={!availabilities.ChallengeHigh}
+            >
+              Set Challenge High
+            </CustomButton>
+            <CustomButton
+              onClick={ChallengeLowButton}
+              disabled={!availabilities.ChallengeLow}
+            >
+              Set Challenge Low
+            </CustomButton>
+            <CustomButton
+              onClick={RandomizerButton}
+              disabled={!availabilities.Randomizer}
+            >
+              Put in randomizer
+            </CustomButton>
+          </Stack>
+        </Container>
+      </Item>
+      <Item sx={{ flexGrow: 4 }}>
         {props.farmId ? (
           <img src={path + 'farm' + props.farmId + '.jpg'} />
         ) : (
           <img src={path + 'farm1342.jpg'} />
         )}
-      </SecondBox> */}
-      </Stack>
-    </>
+      </Item>
+    </Stack>
   )
 }
 

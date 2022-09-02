@@ -4,12 +4,16 @@ import { Farm } from '../../Datalayer/Farm'
 import { farmState } from '../../dataStructure'
 
 interface CowProps {
-  farmId?: string
-  cowId?: string
+  farmId: string
+  cowId: string
 }
 
+/**
+ * Info on the status of the selected cow.
+ * @param props {farmId: id of the corresponding farm, cowId: id of the corresponding cow}
+ * @returns react component
+ */
 export const CowInfo: React.FC<CowProps> = (props: CowProps) => {
-  // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   let farms = useRecoilValue(farmState)
   let selectedFarm = farms.find((f: Farm) =>
     props.farmId?.includes(f.getFarmID())

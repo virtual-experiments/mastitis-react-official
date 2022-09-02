@@ -1,11 +1,12 @@
-//2.1 is voor wat de feedback betreft//2.2 de file er terug uit voor vlot offline gebruik
-//2.3 regionview met kaart en klikken
-
 import { Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/system/Box'
 
-//3.0 met extra warning, foutje eruit, extra scrollbars, relatieve help(zie comments.doc)
+/**
+ * A popup shown to the users when the experiment completed succesfully.
+ * It points them in the right direction on where to find the newly created data.
+ * @returns React component
+ */
 export const ExperimentDialog = () => {
   return (
     <Paper sx={{ p: 3 }}>

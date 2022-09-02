@@ -6,7 +6,7 @@ import { farmState } from '../../dataStructure'
 import styled from 'styled-components'
 
 interface FarmProps {
-  farmId?: string
+  farmId: string
 }
 
 const Centered = styled.div`
@@ -18,6 +18,12 @@ const Centered = styled.div`
 
 let borderType = '1px solid'
 let padding = 10
+
+/**
+ * Info on the status of the selected farm.
+ * @param props farmId: id of the corresponding farm
+ * @returns react component
+ */
 export const FarmInfo: React.FC<FarmProps> = (farm: FarmProps) => {
   // const [appState, setAppState] = useRecoilState<AppState>(recoilState)
   let farms = useRecoilValue(farmState)

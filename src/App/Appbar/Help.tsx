@@ -5,7 +5,11 @@ import { Typography } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import { useEffect } from 'react'
 
-//3.0 met extra warning, foutje eruit, extra scrollbars, relatieve help(zie comments.doc)
+/**
+ * A short explanation of the purpose of the Mastitis application.
+ *
+ * @returns React component
+ */
 export const Help = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -25,7 +29,7 @@ export const Help = () => {
 
       <h1>The purpose of the mastitis applet</h1>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         E. coli mastitis (udder infection by <i>Escherichia coli</i>) is one of
         the most important diseases in dairy cattle, especially in cows in early
         lactation. A vaccine has been developed and its effect needs to be
@@ -37,7 +41,7 @@ export const Help = () => {
         after the infusion.
       </Typography>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         The objective of a vaccination trial is to prove that the milk
         production reduction is less in vaccinated animals than in control
         animals. The investigator, however, needs to take into account that
@@ -47,7 +51,7 @@ export const Help = () => {
         environmental factors that vary from farm to farm.
       </Typography>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         Furthermore, in the study presented in this application, also the effect
         of the challenging dose was studied, comparing a low dose (10
         <sup>4</sup>
@@ -55,11 +59,11 @@ export const Help = () => {
         forming units E. coli).
       </Typography>
 
-      <Typography variant="body1">
-        Two basic statistical concepts are essential in this trial.{' '}
+      <Typography paragraph={true} variant="body1">
+        Two basic statistical concepts are essential in this trial.
       </Typography>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         First, treatment factors need to be randomly assigned to either farms or
         cows in order to draw valid conclusions. Especially if variability
         between cows and farms is large due to particular factors, failure to
@@ -67,14 +71,14 @@ export const Help = () => {
         differences and not treatment differences.
       </Typography>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         Second, efficient experimental design can explain part of the
         variability in the data and thus reduce the error variability against
         which the treatment factors need to be assessed leading to more powerful
         testing.
       </Typography>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         The user is invited to randomise the treatment factors in an efficient
         experimental design to assess both the effect of the vaccination, the
         challenging dose and the interaction between these two factors.
@@ -84,7 +88,7 @@ export const Help = () => {
 
       <h2>Region view</h2>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         When opening the applet, you will see the region view with the different
         locations of the farms on a map. On top of the screen, there is a
         description of the current trial with number of animals assigned to
@@ -93,7 +97,7 @@ export const Help = () => {
 
       <h2>Farm view</h2>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         When clicking on a particular farm on the map or on the region view
         symbol on the left panel, the farm view opens. When clicking once on a
         farm, information of the farm will be shown. Clicking twice on the farm
@@ -107,7 +111,7 @@ export const Help = () => {
 
       <h2>Cow view</h2>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         Once a particular farm has been double clicked, the cows available in
         the farm appear. When clicking on a particular cow, the properties of
         the cow are then shown in the upper right window. A cow then first needs
@@ -122,7 +126,7 @@ export const Help = () => {
 
       <h2>Randomiser view</h2>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         The randomisation urn can be entered by choosing the randomizer item on
         the view ‘balk’. The top panel of the randomisation view shows how many
         cows or farms are currently in the randomisation urn. You can then chose
@@ -136,7 +140,7 @@ export const Help = () => {
 
       <h2>Running the experiment</h2>
 
-      <Typography variant="body1">
+      <Typography paragraph={true} variant="body1">
         Once each animal that has been selected to participate in the trial has
         been assigned to a level of vaccination and challenge, the data can be
         generated by choosing the run item on the experiment ‘balk’. The data
@@ -146,11 +150,15 @@ export const Help = () => {
 
       <h1>Demo</h1>
 
-      <Typography variant="body1">-not implemented yet-</Typography>
+      <Typography paragraph={true} variant="body1">
+        -not implemented yet-
+      </Typography>
 
       <h1>Different parts</h1>
 
-      <Typography variant="body1">-not implemented yet-</Typography>
+      <Typography paragraph={true} variant="body1">
+        -not implemented yet-
+      </Typography>
     </Paper>
   )
 }

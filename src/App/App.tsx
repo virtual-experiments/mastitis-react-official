@@ -19,6 +19,7 @@ import { RandomizerPage } from './Pages/RandomizerPage'
 import { RandomizerInfo } from './Pages/RandomizerInfo'
 import { FarmInfo } from './Pages/FarmInfo'
 import { CowInfo } from './Pages/CowInfo'
+import { NotFound } from '../NotFound'
 
 const elev = 0
 const Item = styled(Paper)(({ theme }) => ({
@@ -38,28 +39,30 @@ export const App: React.FC<AppProps & RouteComponentProps> = (props) => {
   //   )
   // }, [appState])
 
-  const getTopView = (props: AppProps) => {
+  const getTopView = (props: AppProps): JSX.Element => {
     if (props.path === '/') {
       return <RegionInfo />
     } else if (props.path === '/randomizer') {
       return <RandomizerInfo />
-    } else if (props.cowId) {
+    } else if (props.cowId && props.farmId) {
       return <CowInfo farmId={props.farmId} cowId={props.cowId} />
-    } else {
+    } else if (props.farmId) {
       return <FarmInfo farmId={props.farmId} />
     }
+    return <NotFound />
   }
 
-  const getBottomView = (props: AppProps) => {
+  const getBottomView = (props: AppProps): JSX.Element => {
     if (props.path === '/') {
       return <img src={'images/kaart.jpg'} />
     } else if (props.path === '/randomizer') {
       return <RandomizerPage />
-    } else if (props.cowId) {
+    } else if (props.cowId && props.farmId) {
       return <CowButtonPage farmId={props.farmId} cowId={props.cowId} />
-    } else {
+    } else if (props.farmId) {
       return <FarmButtonPage farmId={props.farmId} />
     }
+    return <NotFound />
   }
 
   const drawerWidth = 300
