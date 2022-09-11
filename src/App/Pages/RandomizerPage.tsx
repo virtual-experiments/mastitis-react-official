@@ -107,7 +107,7 @@ export const RandomizerPage: React.FC = () => {
     let remaining = randomization.size() - amount1 //randomization
     return (
       <>
-        <Grid item>
+        <Grid item key={1}>
           <FormControl>
             <InputLabel id="demo-simple-select-label1">
               # of Vaccines
@@ -126,7 +126,7 @@ export const RandomizerPage: React.FC = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item>
+        <Grid item key={2}>
           <FormControl>
             <TextField
               disabled
@@ -286,12 +286,15 @@ export const RandomizerPage: React.FC = () => {
             <Button
               variant="contained"
               onClick={() => {
+                console.log('pressed randomize')
                 let newExp = experiment.copy()
                 let newRan = randomization.copy()
                 let succes = false
                 if (formValue === 'vaccines') {
+                  console.log('randomizing vaccines')
                   if (newRan.randomizeV(amount1, newExp)) {
                     // SUCCESS!
+
                     succes = true
                   }
                 } else if (formValue === 'challenges') {
@@ -308,10 +311,16 @@ export const RandomizerPage: React.FC = () => {
                 }
 
                 if (succes) {
+                  console.log('randomize was succesful')
+                  let newFarms = [...farms]
+                  newFarms = newRan.update(newFarms)
+
                   let newRands = [...randomizations]
                   newRands[0] = newRan
                   setRandomizations([new Randomization(), ...newRands])
                   setExperiment(newExp)
+                  setFarms(newFarms)
+
                   navigate('/')
                 }
               }}

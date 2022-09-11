@@ -10,7 +10,7 @@ import { Farm } from './Farm'
 export class Randomization {
   /******************************  attributes  ******************************************/
   private cows?: Cow[] //minstens één van deze 2 moet steeds null zijn !!
-  private farms?: Farm[]
+  public farms?: Farm[]
   private status: number = -1 //1=randomizeV,2=randomizeC,3=randomizeBoth,0=allreay undone
   /****************************  constructors *******************************************/
   /**
@@ -103,14 +103,17 @@ export class Randomization {
 
     let getallen = this.getRandomValues(aantal)
     /*sorry dat ik hier de GUI oproep, maar het moet tussen deze 2 in gebeuren dus ja ... */
-    if (this.showVaccinWarning(getallen)) {
+    // TODO: add popup warning
+    // if (this.showVaccinWarning(getallen)) {
+    if (true) {
       //gaat door ! user zei yes
       //al de geselecteerden niet-vaccineren: //manuele toekenningen worden zo teniet gedaan // toekenneningen via een vroegere randomizatie wordne 'undo' gedaan, in set Vaccin!
       if (this.farms != null) {
         //welke mode
         for (let i = 0; i < this.farms.length; i++) {
-          let boe = this.farms[i]
+          let boe = this.farms[i].copy()
           boe.setVaccin(false, this, exp)
+          this.farms[i] = boe
         }
       }
       if (this.cows != null) {
@@ -157,7 +160,9 @@ export class Randomization {
     let getallen = this.getRandomValues(aantal)
 
     /*sorry dat ik hier de GUI oproep, maar het moet tussen deze 2 in gebeuren dus ja ... */
-    if (this.showChallengeWarning(getallen)) {
+    // TODO: add popup warning
+    // if (this.showChallengeWarning(getallen)) {
+    if (true) {
       //gaat door !
       //al de geselecteerden een low Challenge geven //manuele toekenningen worden zo teniet gedaan // toekenneningen via een vroegere randomizatie wordne 'undo' gedaan, in setChallenge!
       if (this.farms != null) {
@@ -259,14 +264,17 @@ export class Randomization {
     if (getallenloye.length != LoYe) console.log('Foute randomizatie !!')
 
     /*sorry dat ik hier de GUI oproep, maar het moet tussen deze 2 in gebeuren dus ja ... */
-    if (
-      this.showCombinationWarning(
-        getallenhino,
-        getallenhiye,
-        getallenlono,
-        getallenloye
-      )
-    ) {
+    //
+    // TODO: add popup warning
+    //if (
+    //   this.showCombinationWarning(
+    //     getallenhino,
+    //     getallenhiye,
+    //     getallenlono,
+    //     getallenloye
+    //   )
+    // ) {
+    if (true) {
       //gaat door !
       //nu gaan we de combinaties toekennen
       for (let i = 0; i < HiNo; i++) {
@@ -702,5 +710,31 @@ export class Randomization {
     if (this.cows) newR.cows = [...this.cows]
     if (this.farms) newR.farms = [...this.farms]
     return newR
+  }
+
+  update(newFarms: Farm[]): Farm[] {
+    if (this.farms) {
+      for (var farm of this.farms) {
+        let i = newFarms.findIndex(
+          (f: Farm) => f.getFarmID() === farm.getFarmID()
+        )
+        newFarms[i] = farm
+      }
+    }
+    if (this.cows) {
+      for (var cow of this.cows) {
+        for (let i = 0; i < newFarms.length; i++) {
+          var newF = newFarms[i]
+          if (newF.findCow(cow.getCowID())) {
+            newF.updateCow(cow)
+          }
+          newFarms[i] = newF
+        }
+        // for (var newF of newFarms) {
+
+        // }
+      }
+    }
+    return newFarms
   }
 } //end class Randomization
