@@ -46,7 +46,7 @@ export class Cow {
     this.parity = par
     this.nrDays = dim
     this.initproduction = prod
-    const rando = nextGaussian(-100, 100, 1)
+    const rando = nextGaussian(-100, 100)
 
     if (random) this.random = random
     else if (boerderij)
@@ -210,9 +210,9 @@ export class Cow {
     ran: Randomization | null,
     exp: Experiment
   ): void {
-    if (this.challenge != null && this.challenge.randomized()) {
-      this.challenge.getRandomization()!.undo()
-    }
+    // if (this.challenge != null && this.challenge.randomized()) {
+    //   this.challenge.getRandomization()!.undo(exp)
+    // }
     this.challenge = new Challenge(high, ran)
 
     if (this.participates) exp.updateCow(this)
@@ -226,9 +226,9 @@ export class Cow {
    * @param ran is the link to the randomization, when this vaccin is manually set, pass null
    */
   setVaccin(vac: boolean, ran: Randomization | null, exp: Experiment): void {
-    if (this.vaccin != null && this.vaccin.randomized()) {
-      this.vaccin.getRandomization()!.undo()
-    }
+    // if (this.vaccin != null && this.vaccin.randomized()) {
+    //   this.vaccin.getRandomization()!.undo(exp)
+    // }
     this.vaccin = new Vaccin(vac, ran)
     if (this.participates) exp.updateCow(this)
   } // end setVaccin
@@ -258,7 +258,7 @@ export class Cow {
   }
 }
 
-function nextGaussian(min: number, max: number, skew: number): number {
+function nextGaussian(min: number, max: number): number {
   // let u = 0,
   //   v = 0
   // while (u === 0) u = Math.random() //Converting [0,1) to (0,1)
@@ -278,5 +278,9 @@ function nextGaussian(min: number, max: number, skew: number): number {
     v = 0
   while (u === 0) u = Math.random() //Converting [0,1) to (0,1)
   while (v === 0) v = Math.random()
-  return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v)
+
+  let res = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v)
+  if (res < min) return min
+  if (res > max) return max
+  return res
 }

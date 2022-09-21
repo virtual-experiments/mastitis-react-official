@@ -102,6 +102,8 @@ export class Randomization {
     //eerst stellen we een vector op met 'aantal' verschillende random getalen tussen 0 en size
 
     let getallen = this.getRandomValues(aantal)
+    console.log(getallen)
+
     /*sorry dat ik hier de GUI oproep, maar het moet tussen deze 2 in gebeuren dus ja ... */
     // TODO: add popup warning
     // if (this.showVaccinWarning(getallen)) {
@@ -119,22 +121,27 @@ export class Randomization {
       if (this.cows != null) {
         //welke mode
         for (let i = 0; i < this.cows.length; i++) {
-          let koe = this.cows[i]
+          let koe = this.cows[i].copy()
+          console.log('No vaccine to cow ' + koe.getCowID())
           koe.setVaccin(false, this, exp)
+          this.cows[i] = koe
         }
       }
+
       //nu gaan we de gerandomiseerden vaccineren:
       for (let i = 0; i < aantal; i++) {
         let get = getallen[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setVaccin(true, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setVaccin(true, this, exp)
+          this.cows[get] = koe
         }
       } //end for
       this.status = 1
@@ -168,15 +175,17 @@ export class Randomization {
       if (this.farms != null) {
         //welke mode
         for (let i = 0; i < this.farms.length; i++) {
-          let boe = this.farms[i]
+          let boe = this.farms[i].copy()
           boe.setChallenge(false, this, exp)
+          this.farms[i] = boe
         }
       }
       if (this.cows != null) {
         //welke mode
         for (let i = 0; i < this.cows.length; i++) {
-          let koe = this.cows[i]
+          let koe = this.cows[i].copy()
           koe.setChallenge(false, this, exp)
+          this.cows[i] = koe
         }
       }
       //nu gaan we de gerandomiseerden vaccineren:
@@ -184,13 +193,15 @@ export class Randomization {
         let get = getallen[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setChallenge(true, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setChallenge(true, this, exp)
+          this.cows[get] = koe
         }
       } //end for
       this.status = 2
@@ -281,15 +292,17 @@ export class Randomization {
         let get = getallenhino[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setChallenge(true, this, exp)
           boe.setVaccin(false, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setChallenge(true, this, exp)
           koe.setVaccin(false, this, exp)
+          this.cows[get] = koe
         }
       } //end HINO
 
@@ -297,15 +310,17 @@ export class Randomization {
         let get = getallenhiye[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setChallenge(true, this, exp)
           boe.setVaccin(true, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setChallenge(true, this, exp)
           koe.setVaccin(true, this, exp)
+          this.cows[get] = koe
         }
       } //end HIYES
 
@@ -313,15 +328,17 @@ export class Randomization {
         let get = getallenlono[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setChallenge(false, this, exp)
           boe.setVaccin(false, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setChallenge(false, this, exp)
           koe.setVaccin(false, this, exp)
+          this.cows[get] = koe
         }
       } //end LONO
 
@@ -329,15 +346,17 @@ export class Randomization {
         let get = getallenloye[i]
         if (this.farms != null) {
           //welke mode
-          let boe = this.farms[get]
+          let boe = this.farms[get].copy()
           boe.setChallenge(false, this, exp)
           boe.setVaccin(true, this, exp)
+          this.farms[get] = boe
         }
         if (this.cows != null) {
           //welke mode
-          let koe = this.cows[get]
+          let koe = this.cows[get].copy()
           koe.setChallenge(false, this, exp)
           koe.setVaccin(true, this, exp)
+          this.cows[get] = koe
         }
       } //end LoYe
       this.status = 3
@@ -587,7 +606,7 @@ export class Randomization {
    * All the selected farms/cows will get the involved property set null.
    * If it was manuelly set before this old randomization, this property was allready lost.
    */
-  undo(): void {
+  undo(exp: Experiment): void {
     if (this.status != 0) {
       //nog niet erder undo?
       if (this.status != 2) {
@@ -596,18 +615,21 @@ export class Randomization {
         if (this.farms != null) {
           //welke mode
           for (let i = 0; i < this.farms.length; i++) {
-            let boe = this.farms[i]
+            let boe = this.farms[i].copy()
             for (let j = 0; j < boe.getCows().length; j++) {
-              let koe = boe.getCows()[j]
+              let koe = boe.getCows()[j].copy()
               koe.vaccin = undefined
+              boe.updateCow(koe, exp)
             }
+            this.farms[i] = boe
           }
         }
         if (this.cows != null) {
           //welke mode
           for (let i = 0; i < this.cows.length; i++) {
-            let koe = this.cows[i]
+            let koe = this.cows[i].copy()
             koe.vaccin = undefined
+            this.cows[i] = koe
           }
         }
       }
@@ -619,16 +641,19 @@ export class Randomization {
           for (let i = 0; i < this.farms.length; i++) {
             let boe = this.farms[i]
             for (let j = 0; j < boe.getCows().length; j++) {
-              let koe = boe.getCows()[j]
+              let koe = boe.getCows()[j].copy()
               koe.challenge = undefined
+              boe.updateCow(koe, exp)
             }
+            this.farms[i] = boe
           }
         }
         if (this.cows != null) {
           //welke mode
           for (let i = 0; i < this.cows.length; i++) {
-            let koe = this.cows[i]
+            let koe = this.cows[i].copy()
             koe.challenge = undefined
+            this.cows[i] = koe
           }
         }
       }
@@ -724,7 +749,7 @@ export class Randomization {
     if (this.cows) {
       for (var cow of this.cows) {
         for (let i = 0; i < newFarms.length; i++) {
-          var newF = newFarms[i]
+          var newF = newFarms[i].copy()
           if (newF.findCow(cow.getCowID())) {
             newF.updateCow(cow)
           }

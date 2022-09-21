@@ -39,8 +39,8 @@ export const RandomizerInfo: React.FC = () => {
   return (
     <>
       <div>{str}</div>
-      {res.map((val: string) => {
-        return <div>{val}</div>
+      {res.map((val: string, index) => {
+        return <div key={index}>{val}</div>
       })}
     </>
   )

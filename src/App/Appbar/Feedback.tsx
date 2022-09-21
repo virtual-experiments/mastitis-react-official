@@ -132,8 +132,8 @@ export const Feedback = () => {
           {experiment.numberOfParticipatingCows()} cows were selected to
           participate in the trial.
         </ListItem>
-        {feedbackData.map((d: string) => (
-          <ListItem>{d}</ListItem>
+        {feedbackData.map((d: string, index) => (
+          <ListItem key={index}>{d}</ListItem>
         ))}
       </List>
     </Paper>

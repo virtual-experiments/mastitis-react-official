@@ -61,7 +61,9 @@ export const RandomizerPage: React.FC = () => {
     }
 
     return arr.map((option, index) => (
-      <MenuItem value={option}>{option}</MenuItem>
+      <MenuItem key={index} value={option}>
+        {option}
+      </MenuItem>
     ))
   }
 
@@ -107,7 +109,7 @@ export const RandomizerPage: React.FC = () => {
     let remaining = randomization.size() - amount1 //randomization
     return (
       <>
-        <Grid item key={1}>
+        <Grid item>
           <FormControl>
             <InputLabel id="demo-simple-select-label1">
               # of Vaccines
@@ -294,7 +296,6 @@ export const RandomizerPage: React.FC = () => {
                   console.log('randomizing vaccines')
                   if (newRan.randomizeV(amount1, newExp)) {
                     // SUCCESS!
-
                     succes = true
                   }
                 } else if (formValue === 'challenges') {
