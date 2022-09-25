@@ -12,10 +12,11 @@ const csvWriter = require('csv-writer');
 // });
 
 router.post('/',function(request, response){
-    console.log(request.body);      // your JSON
+    // console.log(request.body);      // your JSON
+    console.log(typeof(request.body[0]))
 
     const writer = csvWriter.createObjectCsvWriter({
-      path: path.resolve(__dirname, 'countries.csv'),
+      path: 'logs/countries.csv',
       header: [
         { id: 'FarmID', title: 'FarmID' },
         { id: 'CowID', title: 'CowID' },
@@ -29,6 +30,7 @@ router.post('/',function(request, response){
         { id: 'Finalmilk', title: 'Finalmilk' },
       ],
     });
+    console.log(writer.path)
     
     writer.writeRecords(request.body).then(() => {
       console.log('Done!');

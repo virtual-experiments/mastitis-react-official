@@ -98,7 +98,7 @@ export function MenuAppBar() {
     handleDatasetClick()
     setContent('Experiment')
 
-    postFarmsToServer(farms)
+    postFarmsToServer(newFarms)
   }
 
   return (
