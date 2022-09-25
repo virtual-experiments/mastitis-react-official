@@ -14,6 +14,9 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: "18.1.0"
-      - run: cd client
-      - run: yarn install
-      - run: yarn build
+      - name: install dependencies
+        working-directory: ./client
+        run: yarn install
+      - name: start build
+        working-directory: ./client
+        run: yarn build
