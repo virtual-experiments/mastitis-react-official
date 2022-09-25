@@ -11,23 +11,7 @@ interface DataFormat {
   data: (string | number | boolean)[][]
 }
 
-export const postFarmsToServer = (farms: Farm[]) => {
-  const Json: DataFormat = {
-    headers: [
-      'FarmID',
-      'CowID',
-      'AAmilk',
-      'BNO',
-      'nDayLact',
-      'Parity',
-      'Challenge',
-      'Vaccine',
-      'Initmilk',
-      'Finalmilk',
-    ],
-    data: [],
-  }
-
+export const postFarmsToServer = (farms: Farm[], id: string) => {
   let dat = []
   for (var farm of farms) {
     for (var cow of farm.getCows()) {
@@ -48,12 +32,10 @@ export const postFarmsToServer = (farms: Farm[]) => {
     }
   }
 
-  //   Json.data = dat
-
   const requestOptions: RequestInit = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(dat),
+    body: JSON.stringify({ data: dat, identification: id }),
   }
   fetch('http://localhost:9000/api', requestOptions).then((response) =>
     response.json()

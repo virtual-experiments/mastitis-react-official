@@ -7,3 +7,5 @@ instrumented/
 .eslintcache
 coverage/
 .nyc_output/
+
+api/logs/

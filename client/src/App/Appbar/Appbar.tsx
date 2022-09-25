@@ -11,8 +11,8 @@ import { navigate } from '@reach/router'
 import { DatasetView } from './DatasetView'
 import { About } from './About'
 import { Feedback } from './Feedback'
-import { experimentState, farmState } from '../../dataStructure'
-import { useRecoilState } from 'recoil'
+import { experimentState, farmState, idState } from '../../dataStructure'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { ExperimentDialog } from './ExperimentDialog'
 import { Help } from './Help'
 import { Strategy } from './Strategy'
@@ -64,6 +64,7 @@ const StyledMenu = styled((props: MenuProps) => (
 export function MenuAppBar() {
   let [experiment, setExperiment] = useRecoilState(experimentState)
   let [farms, setFarms] = useRecoilState(farmState)
+  let id = useRecoilValue(idState)
 
   // MENU 1
   const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null)
@@ -98,7 +99,7 @@ export function MenuAppBar() {
     handleDatasetClick()
     setContent('Experiment')
 
-    postFarmsToServer(newFarms)
+    postFarmsToServer(newFarms, id)
   }
 
   return (
