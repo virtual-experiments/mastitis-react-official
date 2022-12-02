@@ -66,7 +66,7 @@ export const About = () => {
         </tr>
       </table>
       <Box sx={{ height: 5 }} />
-      <div>Copyright (c) 2002-2003</div>
+      <div>Copyright (c) 2002-2022</div>
       <div>Ghent University and Katholieke Universiteit Leuven</div>
     </Paper>
   )
